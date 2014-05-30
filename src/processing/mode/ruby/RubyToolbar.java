@@ -4,8 +4,17 @@ import processing.app.Base;
 import processing.mode.java.JavaToolbar;
 
 import java.awt.event.MouseEvent;
+import javax.swing.JPopupMenu;
 
 public class RubyToolbar extends JavaToolbar {
+  static protected final int RUN    = JavaToolbar.RUN;
+  static protected final int STOP   = JavaToolbar.STOP;
+
+  static protected final int NEW    = JavaToolbar.NEW;
+  static protected final int OPEN   = JavaToolbar.OPEN;
+  static protected final int SAVE   = JavaToolbar.SAVE;
+  static protected final int EXPORT = JavaToolbar.EXPORT;
+
   public RubyToolbar(RubyEditor editor, Base base) {
     super(editor, base);
   }
@@ -14,25 +23,36 @@ public class RubyToolbar extends JavaToolbar {
     boolean shift = e.isShiftDown();
     RubyEditor rbeditor = (RubyEditor) editor;
 
-    System.err.println("handlePressed: " + sel);
-
     switch (sel) {
     case RUN:
+      if (shift) {
+        rbeditor.handlePresent();
+      } else {
+        rbeditor.handleRun();
+      }
       break;
 
     case STOP:
+      rbeditor.handleStop();
       break;
 
     case OPEN:
+//      popup = menu.getPopupMenu();
+      // TODO I think we need a longer chain of accessors here.
+      JPopupMenu popup = editor.getMode().getToolbarMenu().getPopupMenu();
+      popup.show(this, e.getX(), e.getY());
       break;
 
     case NEW:
+      base.handleNew();
       break;
 
     case SAVE:
+      rbeditor.handleSave(false);
       break;
 
     case EXPORT:
+      rbeditor.handleExportApplication();
       break;
     }
   }

@@ -6,8 +6,12 @@ import processing.app.EditorState;
 import processing.app.EditorToolbar;
 import processing.app.Formatter;
 import processing.app.Mode;
+import processing.app.Toolkit;
 import processing.mode.java.AutoFormat;
+import processing.mode.java.JavaToolbar;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
@@ -45,30 +49,27 @@ public class RubyEditor extends Editor {
 
   @Override
   public JMenu buildSketchMenu() { //the 'Sketch' menu, if that wasn't obvious
-    /*
-    JMenuItem runItem = Toolkit.newJMenuItem(PythonToolbar.getTitle(PythonToolbar.RUN, false), 'R');
+    JMenuItem runItem = Toolkit.newJMenuItem(RubyToolbar.getTitle(RubyToolbar.RUN, false), 'R');
     runItem.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          handleRun();
-        }
-      });
+      public void actionPerformed(ActionEvent e) {
+        handleRun();
+      }
+    });
 
-    JMenuItem presentItem = Toolkit.newJMenuItemShift(PythonToolbar.getTitle(PythonToolbar.RUN, true), 'R');
+    JMenuItem presentItem = Toolkit.newJMenuItemShift(RubyToolbar.getTitle(RubyToolbar.RUN, true), 'R');
     presentItem.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          handlePresent();
-        }
-      });
+      public void actionPerformed(ActionEvent e) {
+        handlePresent();
+      }
+    });
 
-    JMenuItem stopItem = new JMenuItem(PythonToolbar.getTitle(PythonToolbar.STOP, false));
+    JMenuItem stopItem = new JMenuItem(RubyToolbar.getTitle(RubyToolbar.STOP, false));
     stopItem.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          handleStop();
-        }
-      });
-    */
-
-    return buildSketchMenu(new JMenuItem[] { /*runItem, presentItem, stopItem*/ });
+      public void actionPerformed(ActionEvent e) {
+        handleStop();
+      }
+    });
+    return buildSketchMenu(new JMenuItem[] { runItem, presentItem, stopItem });
   }
 
   @Override
@@ -96,5 +97,25 @@ public class RubyEditor extends Editor {
 
   @Override
   public void deactivateRun() {
+  }
+
+
+  public void handleRun() {
+    System.err.println("handleRun called");
+  }
+
+  public void handlePresent() {
+    System.err.println("handlePresent called");
+  }
+
+  public void handleStop() {
+    System.err.println("handleStop called");
+  }
+
+  /**
+   * Handler for Sketch &rarr; Export Application
+   */
+  public void handleExportApplication() {
+    System.err.println("handleExportApplication called");
   }
 }
