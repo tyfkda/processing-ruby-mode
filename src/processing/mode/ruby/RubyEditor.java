@@ -7,7 +7,6 @@ import processing.app.EditorToolbar;
 import processing.app.Formatter;
 import processing.app.Mode;
 import processing.mode.java.AutoFormat;
-import processing.mode.java.JavaToolbar;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -19,7 +18,7 @@ public class RubyEditor extends Editor {
 
   @Override
   public EditorToolbar createToolbar() {
-    return new JavaToolbar(this, base);
+    return new RubyToolbar(this, base);
   }
 
   @Override
