@@ -9,6 +9,7 @@ import processing.app.Mode;
 import processing.app.Toolkit;
 import processing.mode.java.AutoFormat;
 import processing.mode.java.JavaToolbar;
+import processing.mode.java.PdeKeyListener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,10 +18,13 @@ import javax.swing.JMenuItem;
 
 public class RubyEditor extends Editor {
   RubyMode rbmode;
+  PdeKeyListener listener;
 
   protected RubyEditor(Base base, String path, EditorState state, RubyMode mode) {
     super(base, path, state, mode);
     rbmode = mode;
+
+    listener = new PdeKeyListener(this, textarea);
   }
 
   @Override
