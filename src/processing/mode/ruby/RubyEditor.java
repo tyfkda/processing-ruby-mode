@@ -16,8 +16,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 public class RubyEditor extends Editor {
-  protected RubyEditor(final Base base, String path, EditorState state, final Mode mode) {
+  RubyMode rbmode;
+
+  protected RubyEditor(Base base, String path, EditorState state, RubyMode mode) {
     super(base, path, state, mode);
+    rbmode = mode;
   }
 
   @Override
