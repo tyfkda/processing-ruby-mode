@@ -3,6 +3,7 @@ package processing.mode.ruby;
 import processing.app.Base;
 import processing.app.Editor;
 import processing.app.EditorState;
+import processing.app.Library;
 import processing.app.Mode;
 import processing.app.RunnerListener;
 import processing.app.Sketch;
@@ -10,10 +11,18 @@ import processing.app.SketchCode;
 import processing.app.SketchException;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.PrintWriter;
 import java.io.FileWriter;
 
 public class RubyMode extends Mode {
+  private static final FilenameFilter JARS = new FilenameFilter() {
+    @Override
+    public boolean accept(final File dir, final String name) {
+      return name.endsWith(".jar");
+    }
+  };
+
   public RubyMode(Base base, File folder) {
     super(base, folder);
   }
@@ -69,26 +78,37 @@ public class RubyMode extends Mode {
     return new String[] {};
   }
 
+  public Library getCoreLibrary() {
+    if (coreLibrary == null) {
+      File coreFolder = Base.getContentFile("core");
+      coreLibrary = new Library(coreFolder);
+    }
+    return coreLibrary;
+  }
+
+
+
+
+
   /**
    * Runs current sketch.
    */
   public void handleRun(Sketch sketch, RunnerListener listener) throws SketchException {
-    File sourceFile = dumpSketchToTemporary(sketch);
-    RubyRunner.run(sourceFile);
+    File outputFolder = sketch.makeTempFolder();
+    File sourceFile = dumpSketchToTemporary(sketch, outputFolder);
+    String classPath = getClassPasses(sketch, outputFolder);
+
+    RubyRunner runner = new RubyRunner();
+    runner.launchApplication(classPath, sourceFile.getAbsolutePath());
   }
 
   /**
    * Outputs sketch codes into temporary directory, and returns its file.
    */
-  private File dumpSketchToTemporary(Sketch sketch) {
+  private File dumpSketchToTemporary(Sketch sketch, File outputFolder) {
     StringBuffer bigCode = new StringBuffer();
-    for (SketchCode sc : sketch.getCode()) {
+    for (SketchCode sc : sketch.getCode())
       bigCode.append(sc.getProgram());
-      bigCode.append('\n');
-    }
-
-    //File outputFolder = sketch.makeTempFolder();
-    File outputFolder = new File("/Users/admin/tmp");
 
     try {
       final File out = new File(outputFolder, sketch.getName() + ".rb");
@@ -104,5 +124,29 @@ public class RubyMode extends Mode {
       ex.printStackTrace();
       return null;
     }
+  }
+
+  static private String getClassPasses(Sketch sketch, File outputFolder) {
+    Library core = sketch.getMode().getCoreLibrary();
+    StringBuffer sb = new StringBuffer();
+    sb.append(outputFolder.getAbsolutePath());
+    sb.append(core.getClassPath());
+
+    String javaClassPath = System.getProperty("java.class.path");
+    // Remove quotes if any.. A messy (and frequent) Windows problem
+    if (javaClassPath.startsWith("\"") && javaClassPath.endsWith("\"")) {
+      javaClassPath = javaClassPath.substring(1, javaClassPath.length() - 1);
+    }
+    sb.append(File.pathSeparator);
+    sb.append(javaClassPath);
+
+    File[] libJars = sketch.getMode().getContentFile("mode").listFiles(JARS);
+    if (libJars != null) {
+      for (final File jar : libJars) {
+        sb.append(File.pathSeparator);
+        sb.append(jar.getAbsolutePath());
+      }
+    }
+    return sb.toString();
   }
 }
