@@ -108,7 +108,13 @@ public class RubyEditor extends Editor {
 
 
   public void handleRun() {
-    System.err.println("handleRun called");
+    prepareRun();
+    toolbar.activate(RubyToolbar.RUN);
+    try {
+      rbmode.handleRun(sketch, this);
+    } catch (Exception e) {
+      statusError(e);
+    }
   }
 
   public void handlePresent() {
@@ -116,7 +122,8 @@ public class RubyEditor extends Editor {
   }
 
   public void handleStop() {
-    System.err.println("handleStop called");
+    toolbar.deactivate(RubyToolbar.RUN);
+    toolbar.deactivate(RubyToolbar.STOP);
   }
 
   /**

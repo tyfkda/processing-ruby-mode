@@ -4,14 +4,19 @@ import processing.app.Base;
 import processing.app.Editor;
 import processing.app.EditorState;
 import processing.app.Mode;
+import processing.app.RunnerListener;
+import processing.app.Sketch;
+import processing.app.SketchCode;
+import processing.app.SketchException;
 
 import java.io.File;
+import java.io.PrintWriter;
+import java.io.FileWriter;
 
 public class RubyMode extends Mode {
   public RubyMode(Base base, File folder) {
     super(base, folder);
   }
-
 
   /**
    * Return the pretty/printable/menu name for this mode. This is separate from
@@ -62,5 +67,42 @@ public class RubyMode extends Mode {
   @Override
   public String[] getIgnorable() {
     return new String[] {};
+  }
+
+  /**
+   * Runs current sketch.
+   */
+  public void handleRun(Sketch sketch, RunnerListener listener) throws SketchException {
+    File sourceFile = dumpSketchToTemporary(sketch);
+    RubyRunner.run(sourceFile);
+  }
+
+  /**
+   * Outputs sketch codes into temporary directory, and returns its file.
+   */
+  private File dumpSketchToTemporary(Sketch sketch) {
+    StringBuffer bigCode = new StringBuffer();
+    for (SketchCode sc : sketch.getCode()) {
+      bigCode.append(sc.getProgram());
+      bigCode.append('\n');
+    }
+
+    //File outputFolder = sketch.makeTempFolder();
+    File outputFolder = new File("/Users/admin/tmp");
+
+    try {
+      final File out = new File(outputFolder, sketch.getName() + ".rb");
+      final PrintWriter stream = new PrintWriter(new FileWriter(out));
+      try {
+        stream.write(bigCode.toString());
+      } finally {
+        stream.close();
+      }
+      return out;
+    } catch (Exception ex) {
+      System.err.println("Uncaught exception type:" + ex.getClass());
+      ex.printStackTrace();
+      return null;
+    }
   }
 }
