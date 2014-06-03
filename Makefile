@@ -14,7 +14,7 @@ PROCESSING_PATH=/Applications/Processing.app
 PROCESSING_CORE_JAR=$(PROCESSING_PATH)/Contents/Java/core.jar
 PROCESSING_APP_JAR=$(PROCESSING_PATH)/Contents/Java/pde.jar
 
-JRUBY_JAR=./jruby.jar
+JRUBY_JAR=others/mode/jruby.jar
 
 dist:	$(TARGET)
 	cp $(TARGET) $(DIST_PATH)
