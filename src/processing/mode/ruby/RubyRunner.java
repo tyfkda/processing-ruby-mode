@@ -1,52 +1,27 @@
 package processing.mode.ruby;
 
 import processing.app.Base;
-import processing.app.Preferences;
-import processing.app.RunnerListener;
 import processing.app.exec.StreamRedirectThread;
-import processing.core.PApplet;
 
-import org.jruby.Ruby;
-import org.jruby.embed.ScriptingContainer;
-
-import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.io.*;
-
 public class RubyRunner {
-  static public void run(File sourceFile) {
-    ScriptingContainer container = new ScriptingContainer();
-    container.setClassLoader(container.getClass().getClassLoader());
-    container.runScriptlet(org.jruby.embed.PathType.ABSOLUTE, sourceFile.getAbsolutePath());
-  }
-
-  static public String join(String[] strings, String comma) {
-    StringBuilder sb = new StringBuilder();
-    for (int i = 0; i < strings.length; ++i) {
-      if (i > 0)
-        sb.append(comma);
-      sb.append(strings[i]);
-    }
-    return sb.toString();
-  }
-
-
-
-
   protected Process process;
 
   // Thread transferring remote output stream to our output stream
   protected Thread outThread = null;
 
-  public void launchApplication(final String classPath, final String sourcePath) {
+  public void launchApplication(final String runnerScriptPath, final String classPath, final String sourcePath) {
     final List<String> command = new ArrayList<String>();
-    command.add(Base.getJavaPath());
+    command.add(Base.getJavaPath());  // Java executable file.
     command.add("-cp");
     command.add(classPath);
-    command.add("org.jruby.Main");
-    command.add(sourcePath);
+    command.add("org.jruby.Main");  // JRuby as a boot class.
+    command.add(runnerScriptPath);  // Script file name for JRuby.
+    // Below, arguments for runner script.
+    command.add(sourcePath);  // Processing main file name.
 
     process = null;
     new Thread(new Runnable() {

@@ -1,0 +1,31 @@
+# additional keywords for Ruby mode
+
+# Literals
+
+nil	LITERAL2
+true	LITERAL2
+false	LITERAL2
+
+# Flow structure
+
+module	KEYWORD3
+include	KEYWORD3
+
+def	KEYWORD3
+class	KEYWORD3
+end	KEYWORD3
+do	KEYWORD3
+begin	KEYWORD3
+rescue	KEYWORD3
+ensure	KEYWORD3
+if	KEYWORD3
+unless	KEYWORD3
+then	KEYWORD3
+elsif	KEYWORD3
+else	KEYWORD3
+return	KEYWORD3
+while	KEYWORD3
+until	KEYWORD3
+yield	KEYWORD3
+next	KEYWORD3
+break	KEYWORD3
