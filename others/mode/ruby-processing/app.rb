@@ -139,7 +139,8 @@ module Processing
       # for the list of all available args, see
       # http://processing.org/reference/
 
-      args = []
+      #args = []
+      args = ARGV.dup
 
       @width, @height = options[:width], options[:height]
 
