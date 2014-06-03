@@ -17,7 +17,7 @@ def setup()
   @last_bar = -1
 end
 
-def draw
+def draw()
   which_bar = mouse_x / BAR_WIDTH
   if which_bar != @last_bar
     bar_x = which_bar * BAR_WIDTH
