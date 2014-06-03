@@ -1,17 +1,17 @@
 #
 # Additive Wave
-# by Daniel Shiffman. 
-# 
-# Create a more complex wave by adding two waves together. 
+# by Daniel Shiffman.
 #
- 
+# Create a more complex wave by adding two waves together.
+#
+
 XSPACING = 8   # How far apart should each horizontal location be spaced
 MAXWAVES = 4   # total # of waves to add together
 
 def setup()
   size(640, 360)
-  frameRate(30)
-  colorMode(RGB, 255, 255, 255, 100)
+  frame_rate(30)
+  color_mode(RGB, 255, 255, 255, 100)
   w = width + 16
 
   @theta = 0.0
@@ -30,11 +30,11 @@ end
 
 def draw()
   background(0)
-  calcWave()
-  renderWave()
+  calc_wave()
+  render_wave()
 end
 
-def calcWave()
+def calc_wave()
   # Increment theta (try different values for 'angular velocity' here
   @theta += 0.02;
 
@@ -42,7 +42,7 @@ def calcWave()
   @yvalues.length.times do |i|
     @yvalues[i] = 0
   end
- 
+
   # Accumulate wave height values
   MAXWAVES.times do |j|
     x = @theta
@@ -58,7 +58,7 @@ def calcWave()
   end
 end
 
-def renderWave()
+def render_wave()
   # A simple way to draw the wave with an ellipse at each location
   noStroke()
   fill(255,50)
@@ -67,4 +67,3 @@ def renderWave()
     ellipse(x*XSPACING,width/2+@yvalues[x],16,16)
   end
 end
-

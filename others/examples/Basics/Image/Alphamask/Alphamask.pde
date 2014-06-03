@@ -1,17 +1,17 @@
 #
-# Alpha Mask. 
-# 
-# Loads a "mask" for an image to specify the transparency 
+# Alpha Mask.
+#
+# Loads a "mask" for an image to specify the transparency
 # in different parts of the image. The two images are blended
-# together using the mask() method of PImage. 
+# together using the mask() method of PImage.
 #
 
 def setup()
   size(640, 360)
-  @img = loadImage("moonwalk.jpg")
-  @imgMask = loadImage("mask.jpg")
+  @img = load_image("moonwalk.jpg")
+  @imgMask = load_image("mask.jpg")
   @img.mask(@imgMask)
-  imageMode(CENTER)
+  image_mode(CENTER)
 end
 
 def draw()
@@ -19,4 +19,3 @@ def draw()
   image(@img, width/2, height/2)
   image(@img, mouse_x, mouse_y)
 end
-

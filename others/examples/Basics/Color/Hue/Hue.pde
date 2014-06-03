@@ -10,17 +10,17 @@ BAR_WIDTH = 20
 
 def setup()
   size(640, 360)
-  colorMode(HSB, height, height, height)
-  noStroke()
+  color_mode(HSB, height, height, height)
+  no_stroke()
   background(0)
   @last_bar = -1
 end
 
 def draw()
-  which_bar = mouseX / BAR_WIDTH
+  which_bar = mouse_x / BAR_WIDTH
   if which_bar != @last_bar
     barX = which_bar * BAR_WIDTH
-    fill(mouseY, height, height)
+    fill(mouse_y, height, height)
     rect(barX, 0, BAR_WIDTH, height)
     @last_bar = which_bar
   end

@@ -10,8 +10,8 @@ BAR_WIDTH = 20
 
 def setup()
   size(640, 360)
-  colorMode(HSB, width, 100, width)
-  noStroke()
+  color_mode(HSB, width, 100, width)
+  no_stroke()
   background(0)
 
   @last_bar = -1

@@ -1,15 +1,15 @@
 #
-# Load and Display 
-# 
+# Load and Display
+#
 # Images can be loaded and displayed to the screen at their actual size
-# or any other size. 
+# or any other size.
 #
 
 def setup()
   size(640, 360)
-  # The image file must be in the data folder of the current sketch 
+  # The image file must be in the data folder of the current sketch
   # to load successfully
-  @img = loadImage("moonwalk.jpg")  # Load the image into the program
+  @img = load_image("moonwalk.jpg")  # Load the image into the program
 end
 
 def draw()
@@ -18,4 +18,3 @@ def draw()
   # Displays the image at point (0, height/2) at half of its size
   image(@img, 0, height/2, @img.width/2, @img.height/2);
 end
-
