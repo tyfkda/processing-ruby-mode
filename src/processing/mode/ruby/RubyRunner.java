@@ -45,7 +45,7 @@ public class RubyRunner {
     command.add(Base.getJavaPath());
     command.add("-cp");
     command.add(classPath);
-    command.add(RubyRunner.class.getName());
+    command.add("org.jruby.Main");
     command.add(sourcePath);
 
     process = null;
@@ -84,16 +84,5 @@ public class RubyRunner {
     } catch (InterruptedException ex) {
       System.err.println(ex);
     }
-  }
-
-
-
-
-
-  public static void main(final String[] args) throws Exception {
-    String sourceFileName = args[0];
-    ScriptingContainer container = new ScriptingContainer();
-    container.setClassLoader(container.getClass().getClassLoader());
-    container.runScriptlet(org.jruby.embed.PathType.ABSOLUTE, sourceFileName);
   }
 }
