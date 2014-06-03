@@ -130,11 +130,13 @@ public class RubyMode extends Mode {
   }
 
   static private String getClassPasses(Sketch sketch, File outputFolder) {
+    // Processing libraries.
     Library core = sketch.getMode().getCoreLibrary();
     StringBuffer sb = new StringBuffer();
     sb.append(outputFolder.getAbsolutePath());
     sb.append(core.getClassPath());
 
+    // Java libraries.
     String javaClassPath = System.getProperty("java.class.path");
     // Remove quotes if any.. A messy (and frequent) Windows problem
     if (javaClassPath.startsWith("\"") && javaClassPath.endsWith("\"")) {
@@ -143,6 +145,7 @@ public class RubyMode extends Mode {
     sb.append(File.pathSeparator);
     sb.append(javaClassPath);
 
+    // Ruby mode libraries.
     File[] libJars = sketch.getMode().getContentFile("mode").listFiles(JARS);
     if (libJars != null) {
       for (final File jar : libJars) {

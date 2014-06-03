@@ -21,7 +21,7 @@ public class RubyRunner {
     command.add("org.jruby.Main");  // JRuby as a boot class.
     command.add(runnerScriptPath);  // Script file name for JRuby.
     // Below, arguments for runner script.
-    command.add(sourcePath);  // Processing main file name.
+    command.add(sourcePath);  // Sketch main file name.
 
     process = null;
     new Thread(new Runnable() {
