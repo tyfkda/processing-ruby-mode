@@ -137,15 +137,6 @@ public class RubyMode extends Mode {
     sb.append(outputFolder.getAbsolutePath());
     sb.append(core.getClassPath());
 
-    // Java libraries.
-    String javaClassPath = System.getProperty("java.class.path");
-    // Remove quotes if any.. A messy (and frequent) Windows problem
-    if (javaClassPath.startsWith("\"") && javaClassPath.endsWith("\"")) {
-      javaClassPath = javaClassPath.substring(1, javaClassPath.length() - 1);
-    }
-    sb.append(File.pathSeparator);
-    sb.append(javaClassPath);
-
     // Ruby mode libraries.
     File[] libJars = sketch.getMode().getContentFile("mode").listFiles(JARS);
     if (libJars != null) {
