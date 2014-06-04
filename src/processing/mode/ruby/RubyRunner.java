@@ -14,7 +14,7 @@ public class RubyRunner {
   // Thread transferring remote output stream to our output stream
   protected Thread outThread = null;
 
-  public void launchApplication(final String runnerScriptPath, final String classPath, final String sourcePath, final String sketchPath) {
+  public void launchApplication(final String runnerScriptPath, final String classPath, final String sourcePath, final String sketchPath, final String processingCoreJars) {
     final List<String> command = new ArrayList<String>();
     command.add(Base.getJavaPath());  // Java executable file.
     command.add("-cp");
@@ -23,6 +23,7 @@ public class RubyRunner {
     command.add(runnerScriptPath);  // Script file name for JRuby.
     // Below, arguments for runner script.
     command.add(sourcePath);  // Sketch main file name.
+    command.add(processingCoreJars);  // processing.core.*, concatenated with ':'
     // Options
     command.add(PApplet.ARGS_SKETCH_FOLDER + "=" + sketchPath);
 

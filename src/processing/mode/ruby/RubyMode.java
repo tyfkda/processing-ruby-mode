@@ -96,11 +96,14 @@ public class RubyMode extends Mode {
     String classPath = getClassPasses(sketch, outputFolder);
     String sketchPath = sketch.getFolder().getAbsolutePath();
 
+    Library core = sketch.getMode().getCoreLibrary();
+    String processingCoreJars = core.getClassPath();
+
     File modeFile = sketch.getMode().getContentFile("mode");
     File runnerScriptPath = new File(modeFile, "run.rb");
 
     RubyRunner runner = new RubyRunner();
-    runner.launchApplication(runnerScriptPath.getAbsolutePath(), classPath, sourceFile.getAbsolutePath(), sketchPath);
+    runner.launchApplication(runnerScriptPath.getAbsolutePath(), classPath, sourceFile.getAbsolutePath(), sketchPath, processingCoreJars);
   }
 
   /**

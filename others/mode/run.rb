@@ -3,6 +3,21 @@ $LOAD_PATH << File.dirname(__FILE__)
 SKETCH_PATH = ARGV.shift unless defined? SKETCH_PATH
 SKETCH_ROOT = File.dirname(SKETCH_PATH) unless defined? SKETCH_ROOT
 
+module Processing
+  CONFIG = {}
+end
+
+def get_class_paths(str)
+  # Assumes that the string has separator on the top.
+  # ex. ':/Applications/Processing.app/Contents/Java/core/library/core.jar:/Applications/...'
+  separator = str[0]
+  str[1..-1].split(separator)
+end
+
+unless defined? PROCESSING_CORE_JARS
+  Processing::CONFIG['PROCESSING_CORE_JARS'] = get_class_paths(ARGV.shift)
+end
+
 require 'ruby-processing/helpers/string'
 require 'ruby-processing/helpers/numeric'
 require 'ruby-processing/app'

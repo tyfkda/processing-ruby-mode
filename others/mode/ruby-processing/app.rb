@@ -9,8 +9,7 @@ require 'ruby-processing/library_loader'
 #require 'ruby-processing/config'
 
 #Dir["#{Processing::CONFIG["PROCESSING_ROOT"]}/core/library/\*.jar"].each { |jar| require jar }
-require '/Applications/Processing.app/Contents/Java/core.jar'
-require '/Applications/Processing.app/Contents/Java/pde.jar'
+Processing::CONFIG['PROCESSING_CORE_JARS'].each {|jar| require jar}
 
 # Include some core processing classes that we'd like to use:
 %w(PApplet PConstants PFont PImage PShape PShapeOBJ PShapeSVG PStyle PGraphicsJava2D PGraphics PFont PVector PMatrix2D PMatrix3D).each do |klass|
