@@ -67,3 +67,4 @@ def render_wave()
     ellipse(x*XSPACING,width/2+@yvalues[x],16,16)
   end
 end
+

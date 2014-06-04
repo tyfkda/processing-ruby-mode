@@ -26,3 +26,4 @@ def draw()
     @y = 0
   end
 end
+

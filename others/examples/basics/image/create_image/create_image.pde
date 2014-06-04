@@ -19,3 +19,4 @@ def draw()
   image(@img, 90, 80)
   image(@img, mouse_x-@img.width/2, mouse_y-@img.height/2)
 end
+

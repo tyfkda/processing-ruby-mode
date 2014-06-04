@@ -31,3 +31,4 @@ def draw_gradient(x, y)
     h = (h + 1) % 360
   end
 end
+

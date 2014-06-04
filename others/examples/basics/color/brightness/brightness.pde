@@ -26,3 +26,4 @@ def draw()
     @last_bar = which_bar
   end
 end
+

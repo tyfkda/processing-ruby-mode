@@ -49,3 +49,4 @@ def set_gradient(x, y, w, h, c1, c2, axis)
     end
   end
 end
+

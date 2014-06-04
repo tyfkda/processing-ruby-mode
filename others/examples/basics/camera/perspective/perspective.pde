@@ -38,3 +38,4 @@ def draw()
   translate(0, 0, -50)
   box(30)
 end
+
