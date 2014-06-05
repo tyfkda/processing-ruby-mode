@@ -125,11 +125,4 @@ public class RubyEditor extends Editor {
     toolbar.deactivate(RubyToolbar.RUN);
     toolbar.deactivate(RubyToolbar.STOP);
   }
-
-  /**
-   * Handler for Sketch &rarr; Export Application
-   */
-  public void handleExportApplication() {
-    System.err.println("handleExportApplication called");
-  }
 }

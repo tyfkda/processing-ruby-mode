@@ -3,6 +3,7 @@ package processing.mode.ruby;
 import processing.app.Base;
 import processing.mode.java.JavaToolbar;
 
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import javax.swing.JPopupMenu;
 
@@ -13,10 +14,15 @@ public class RubyToolbar extends JavaToolbar {
   static protected final int NEW    = JavaToolbar.NEW;
   static protected final int OPEN   = JavaToolbar.OPEN;
   static protected final int SAVE   = JavaToolbar.SAVE;
-  static protected final int EXPORT = JavaToolbar.EXPORT;
 
   public RubyToolbar(RubyEditor editor, Base base) {
     super(editor, base);
+  }
+
+  public void init() {
+    Image[][] images = loadImages();
+    for (int i = 0; i < 5; ++i)
+      addButton(getTitle(i, false), getTitle(i, true), images[i], i == NEW);
   }
 
   public void handlePressed(MouseEvent e, int sel) {
@@ -49,10 +55,6 @@ public class RubyToolbar extends JavaToolbar {
 
     case SAVE:
       rbeditor.handleSave(false);
-      break;
-
-    case EXPORT:
-      rbeditor.handleExportApplication();
       break;
     }
   }
