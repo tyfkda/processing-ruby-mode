@@ -29,7 +29,7 @@ module Processing
     has_methods = !!source.match(/^[^#]*(def\s+setup|def\s+draw)/)
 
     if has_sketch
-      load File.join(SKETCH_ROOT, SKETCH_PATH)
+      load SKETCH_PATH
       Processing::App.sketch_class.new if !$app
     else
       # For use with "bare" sketches that don't want to define a class or methods
