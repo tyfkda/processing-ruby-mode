@@ -103,7 +103,9 @@ public class RubyMode extends Mode {
     File runnerScriptPath = new File(modeFile, "run.rb");
 
     RubyRunner runner = new RubyRunner();
-    runner.launchApplication(runnerScriptPath.getAbsolutePath(), classPath, sourceFile.getAbsolutePath(), sketchPath, processingCoreJars);
+    runner.launchApplication(sourceFile.getAbsolutePath(), sketchPath,
+                             runnerScriptPath.getAbsolutePath(), classPath,
+                             processingCoreJars);
   }
 
   /**
