@@ -1,6 +1,7 @@
 package processing.mode.ruby;
 
 import processing.app.Base;
+import processing.app.Preferences;
 import processing.app.exec.StreamRedirectThread;
 import processing.core.PApplet;
 
@@ -15,6 +16,7 @@ public class RubyRunner {
   protected Thread outThread = null;
 
   /**
+   * @param sketchName  Sketch name.
    * @param sourcePath  Temporary script path, which is put for running the
                         sketch.
    * @param sketchPath  Path where the sketch is saved.
@@ -24,13 +26,14 @@ public class RubyRunner {
                                 to `require` them in Processing::App.
                                 Assumes separator is put at the top.
    */
-  public void launchApplication(String sourcePath, String sketchPath,
-                                String runnerScriptPath, String classPath,
-                                String processingCoreJars) {
+  public void launchApplication(String sketchName, String sourcePath,
+                                String sketchPath, String runnerScriptPath,
+                                String classPath, String processingCoreJars) {
     final List<String> command = new ArrayList<String>();
     command.add(Base.getJavaPath());  // Java executable file.
     command.add("-cp");
     command.add(classPath);
+    getMachineParams(sketchName, command);
     command.add("org.jruby.Main");  // JRuby as a boot class.
     command.add(runnerScriptPath);  // Script file name for JRuby.
     // Below, arguments for runner script.
@@ -75,5 +78,56 @@ public class RubyRunner {
     } catch (InterruptedException ex) {
       System.err.println(ex);
     }
+  }
+
+  // Taken from processing.mode.java.runner.Runner#getMachineParams
+  protected void getMachineParams(String sketchName, List<String> params) {
+    //params.add("-Xint"); // interpreted mode
+    //params.add("-Xprof");  // profiler
+    //params.add("-Xaprof");  // allocation profiler
+    //params.add("-Xrunhprof:cpu=samples");  // old-style profiler
+
+    // TODO change this to use run.args = true, run.args.0, run.args.1, etc.
+    // so that spaces can be included in the arg names
+    String options = Preferences.get("run.options");
+    if (options.length() > 0) {
+      String pieces[] = PApplet.split(options, ' ');
+      for (int i = 0; i < pieces.length; i++) {
+        String p = pieces[i].trim();
+        if (p.length() > 0) {
+          params.add(p);
+        }
+      }
+    }
+
+//    params.add("-Djava.ext.dirs=nuffing");
+
+    if (Preferences.getBoolean("run.options.memory")) {
+      params.add("-Xms" + Preferences.get("run.options.memory.initial") + "m");
+      params.add("-Xmx" + Preferences.get("run.options.memory.maximum") + "m");
+    }
+
+    if (Base.isMacOS()) {
+      params.add("-Xdock:name=" + sketchName);
+//      params.add("-Dcom.apple.mrj.application.apple.menu.about.name=" +
+//                 sketch.getMainClassName());
+    }
+    // sketch.libraryPath might be ""
+    // librariesClassPath will always have sep char prepended
+    params.add("-Djava.library.path=" +
+               //build.getJavaLibraryPath() +
+               //File.pathSeparator +
+               System.getProperty("java.library.path"));
+
+    //params.add("-cp");
+    //params.add(build.getClassPath());
+//    params.add(sketch.getClassPath() +
+//        File.pathSeparator +
+//        Base.librariesClassPath);
+
+    // enable assertions
+    // http://dev.processing.org/bugs/show_bug.cgi?id=1188
+    params.add("-ea");
+    //PApplet.println(PApplet.split(sketch.classPath, ':'));
   }
 }
