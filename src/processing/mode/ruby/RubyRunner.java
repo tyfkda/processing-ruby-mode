@@ -51,11 +51,20 @@ public class RubyRunner {
             process = pb.start();
 
             try {
-              /*int result =*/ process.waitFor();
+              int result = process.waitFor();
+              if (result == 0) {
+                System.err.println("Run finished");
+              } else {
+                String[] errorStrings = PApplet.loadStrings(process.getErrorStream());
+                String[] inputStrings = PApplet.loadStrings(process.getInputStream());
+                for (String s : inputStrings)
+                  System.out.println(s);
+                for (String s : errorStrings)
+                  System.err.println(s);
+              }
             } catch (InterruptedException ex) {
               System.err.println(ex);
             }
-            System.err.println("Run finished");
           } catch (IOException ex) {
             System.err.println("IOException: " + ex);
           }
