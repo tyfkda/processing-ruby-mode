@@ -22,7 +22,7 @@ public class RubyToolbar extends JavaToolbar {
   public void init() {
     Image[][] images = loadImages();
     for (int i = 0; i < 5; ++i)
-      addButton(getTitle(i, false), getTitle(i, true), images[i], i == NEW);
+      addButton(getTitle(i, false), getTitle(i, false), images[i], i == NEW);
   }
 
   public void handlePressed(MouseEvent e, int sel) {

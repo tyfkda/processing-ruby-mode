@@ -63,20 +63,13 @@ public class RubyEditor extends Editor {
       }
     });
 
-    JMenuItem presentItem = Toolkit.newJMenuItemShift(RubyToolbar.getTitle(RubyToolbar.RUN, true), 'R');
-    presentItem.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        handlePresent();
-      }
-    });
-
     JMenuItem stopItem = new JMenuItem(RubyToolbar.getTitle(RubyToolbar.STOP, false));
     stopItem.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         handleStop();
       }
     });
-    return buildSketchMenu(new JMenuItem[] { runItem, presentItem, stopItem });
+    return buildSketchMenu(new JMenuItem[] { runItem, stopItem });
   }
 
   @Override
