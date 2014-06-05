@@ -14,7 +14,19 @@ public class RubyRunner {
   // Thread transferring remote output stream to our output stream
   protected Thread outThread = null;
 
-  public void launchApplication(final String runnerScriptPath, final String classPath, final String sourcePath, final String sketchPath, final String processingCoreJars) {
+  /**
+   * @param runnerScriptPath  ex. ~/Documents/Processing/modes/RubyMode/mode/run.rb
+   * @param classPath  .jar files for Processing and RubyMode.
+   * @param sourcePath  Temporary script path, which is put for running the
+                        sketch.
+   * @param sketchPath  Path where the sketch is saved.
+   * @param processingCoreJars  .jar files for Processing core, which are used
+                                to `require` them in Processing::App.
+                                Assumes separator is put at the top.
+   */
+  public void launchApplication(String runnerScriptPath, String classPath,
+                                String sourcePath, String sketchPath,
+                                String processingCoreJars) {
     final List<String> command = new ArrayList<String>();
     command.add(Base.getJavaPath());  // Java executable file.
     command.add("-cp");
