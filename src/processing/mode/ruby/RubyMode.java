@@ -90,22 +90,28 @@ public class RubyMode extends Mode {
   /**
    * Runs current sketch.
    */
-  public void handleRun(Sketch sketch, RunnerListener listener) throws SketchException {
-    File outputFolder = sketch.makeTempFolder();
-    File sourceFile = dumpSketchToTemporary(sketch, outputFolder);
-    String classPath = getClassPasses(sketch, outputFolder);
-    String sketchPath = sketch.getFolder().getAbsolutePath();
+  public void handleRun(final Sketch sketch, final RunnerListener listener) throws SketchException {
+    new Thread(new Runnable() {
+        @Override
+        public void run() {
+          File outputFolder = sketch.makeTempFolder();
+          File sourceFile = dumpSketchToTemporary(sketch, outputFolder);
+          String classPath = getClassPasses(sketch, outputFolder);
+          String sketchPath = sketch.getFolder().getAbsolutePath();
 
-    Library core = sketch.getMode().getCoreLibrary();
-    String processingCoreJars = core.getClassPath();
+          Library core = sketch.getMode().getCoreLibrary();
+          String processingCoreJars = core.getClassPath();
 
-    File modeFile = sketch.getMode().getContentFile("mode");
-    File runnerScriptPath = new File(modeFile, "run.rb");
+          File modeFile = sketch.getMode().getContentFile("mode");
+          File runnerScriptPath = new File(modeFile, "run.rb");
 
-    RubyRunner runner = new RubyRunner();
-    runner.launchApplication(sketch.getName(), sourceFile.getAbsolutePath(),
-                             sketchPath, runnerScriptPath.getAbsolutePath(),
-                             classPath, processingCoreJars);
+          RubyRunner runner = new RubyRunner();
+
+          runner.launchApplication(sketch.getName(), sourceFile.getAbsolutePath(),
+                                   sketchPath, runnerScriptPath.getAbsolutePath(),
+                                   classPath, processingCoreJars);
+        }
+      }).start();
   }
 
   /**
