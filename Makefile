@@ -7,21 +7,19 @@ OUTPUT_PATH=classes
 DIST_PATH=~/Documents/Processing/modes/RubyMode/mode/
 
 SRCS=$(wildcard $(SRCDIR)/*.java)
-CLASSES=$(subst $(SRC_ROOT_PATH)/,$(OUTPUT_PATH)/,$(SRCS:%.java=%.class))
-PATH_CLASSES=$(subst $(OUTPUT_PATH)/,,$(CLASSES))
 
 PROCESSING_PATH=/Applications/Processing.app
 PROCESSING_CORE_JAR=$(PROCESSING_PATH)/Contents/Java/core.jar
 PROCESSING_APP_JAR=$(PROCESSING_PATH)/Contents/Java/pde.jar
 
-dist:	$(TARGET)
+all:	$(DIST_PATH)/$(TARGET)
+
+$(DIST_PATH)/$(TARGET):	$(TARGET)
 	cp $(TARGET) $(DIST_PATH)
 
-$(TARGET):	$(CLASSES)
+$(TARGET):	$(SRCS)
+	javac -d $(OUTPUT_PATH) -sourcepath $(SRC_ROOT_PATH) -cp src:$(PROCESSING_CORE_JAR):$(PROCESSING_APP_JAR) src/processing/mode/ruby/RubyMode.java
 	jar -cvf $@ -C $(OUTPUT_PATH) .
 
 clean:
-	rm -rf $(CLASSES) $(TARGET)
-
-$(OUTPUT_PATH)/%.class:	$(SRC_ROOT_PATH)/%.java
-	javac -d $(OUTPUT_PATH) -cp src:$(PROCESSING_CORE_JAR):$(PROCESSING_APP_JAR) $^
+	rm -rf $(OUTPUT_PATH)/processing $(TARGET)
