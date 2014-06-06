@@ -28,7 +28,7 @@ def dot(px, py, c)
   #func = cos(px) + sin(py) + c
   if func.abs <= FUZZ
     fill(((CMIN - c) / (CMIN - CMAX)), 1, 1)
-    ellipse px * width, py * height, SZ, SZ
+    ellipse px * width / TWO_PI, py * height / TWO_PI, SZ, SZ
   else
     dot(rand(-PI .. PI), rand(-PI .. PI), rand(CMIN .. CMAX))
   end
