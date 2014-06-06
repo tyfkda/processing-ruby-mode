@@ -1,7 +1,9 @@
 package processing.mode.ruby;
 
 import processing.app.Base;
+import processing.app.Editor;
 import processing.app.Preferences;
+import processing.app.RunnerListener;
 import processing.app.exec.StreamRedirectThread;
 import processing.core.PApplet;
 
@@ -14,6 +16,13 @@ public class RubyRunner {
 
   // Thread transferring remote output stream to our output stream
   protected Thread outThread = null;
+
+  protected Editor editor;
+
+  public RubyRunner(RunnerListener listener) {
+    if (listener instanceof Editor)
+      editor = (Editor) listener;
+  }
 
   public void close() {
     if (process != null) {
@@ -91,6 +100,14 @@ public class RubyRunner {
     outThread.start();
     try {
       outThread.join();
+
+      // At this point, disable the run button.
+      // This happens when the sketch is exited by hitting ESC,
+      // or the user manually closes the sketch window.
+      // TODO this should be handled better, should it not?
+      if (editor != null) {
+        editor.deactivateRun();
+      }
     } catch (InterruptedException ex) {
       System.err.println(ex);
     }

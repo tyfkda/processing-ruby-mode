@@ -98,8 +98,15 @@ public class RubyEditor extends Editor {
   public void internalCloseRunner() {
   }
 
+  /**
+   * Deactivate the Run button. This is called by Runner to notify that the
+   * sketch has stopped running, usually in response to an error (or maybe
+   * the sketch completing and exiting?) Tools should not call this function.
+   * To initiate a "stop" action, call handleStop() instead.
+   */
   @Override
   public void deactivateRun() {
+    toolbar.deactivate(RubyToolbar.RUN);
   }
 
 

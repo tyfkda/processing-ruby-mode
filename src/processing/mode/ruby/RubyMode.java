@@ -91,7 +91,7 @@ public class RubyMode extends Mode {
    * Runs current sketch.
    */
   public RubyRunner handleRun(final Sketch sketch, final RunnerListener listener) throws SketchException {
-    final RubyRunner runner = new RubyRunner();
+    final RubyRunner runner = new RubyRunner(listener);
     new Thread(new Runnable() {
         @Override
         public void run() {
