@@ -17,8 +17,6 @@ Processing::CONFIG['PROCESSING_CORE_JARS'].each {|jar| require jar}
 end
 
 module Processing
-  CONFIG = {}
-
   # This is the main Ruby-Processing class, and is what you'll
   # inherit from when you create a sketch. This class can call
   # all of the methods available in Processing, and has two
