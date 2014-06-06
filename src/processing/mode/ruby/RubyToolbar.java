@@ -31,11 +31,7 @@ public class RubyToolbar extends JavaToolbar {
 
     switch (sel) {
     case RUN:
-      if (shift) {
-        rbeditor.handlePresent();
-      } else {
-        rbeditor.handleRun();
-      }
+      rbeditor.handleRun();
       break;
 
     case STOP:
