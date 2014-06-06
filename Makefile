@@ -14,8 +14,6 @@ PROCESSING_PATH=/Applications/Processing.app
 PROCESSING_CORE_JAR=$(PROCESSING_PATH)/Contents/Java/core.jar
 PROCESSING_APP_JAR=$(PROCESSING_PATH)/Contents/Java/pde.jar
 
-JRUBY_JAR=others/mode/jruby.jar
-
 dist:	$(TARGET)
 	cp $(TARGET) $(DIST_PATH)
 
@@ -26,4 +24,4 @@ clean:
 	rm -rf $(CLASSES) $(TARGET)
 
 $(OUTPUT_PATH)/%.class:	$(SRC_ROOT_PATH)/%.java
-	javac -d $(OUTPUT_PATH) -cp src:$(PROCESSING_CORE_JAR):$(PROCESSING_APP_JAR):$(JRUBY_JAR) $^
+	javac -d $(OUTPUT_PATH) -cp src:$(PROCESSING_CORE_JAR):$(PROCESSING_APP_JAR) $^
