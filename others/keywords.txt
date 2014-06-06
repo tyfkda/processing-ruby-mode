@@ -53,7 +53,7 @@ ALPHA	LITERAL2
 ALPHA_MASK	LITERAL2
 ALT	LITERAL2
 AMBIENT	LITERAL2
-ARC	LITERAL2	createShape_
+ARC	LITERAL2	create_shape_
 ARROW	LITERAL2	cursor_
 ARGB	LITERAL2
 BACKSPACE	LITERAL2	keyCode
@@ -63,7 +63,7 @@ BLEND	LITERAL2	blend_
 BLUE_MASK	LITERAL2
 BLUR	LITERAL2	filter_
 BOTTOM	LITERAL2	textAlign_
-BOX	LITERAL2	createShape_
+BOX	LITERAL2	create_shape_
 BURN	LITERAL2	blend_
 CENTER	LITERAL2
 CHATTER	LITERAL2
@@ -107,7 +107,7 @@ DODGE	LITERAL2	blend_
 DOWN	LITERAL2	keyCode
 DRAG	LITERAL2
 DXF	LITERAL2	size_
-ELLIPSE	LITERAL2	createShape_
+ELLIPSE	LITERAL2	create_shape_
 ENABLE_ACCURATE_2D	LITERAL2
 ENABLE_DEPTH_MASK	LITERAL2
 ENABLE_DEPTH_SORT	LITERAL2
@@ -134,13 +134,13 @@ HAND	LITERAL2	cursor_
 HARD_LIGHT	LITERAL2	blend_
 HINT_COUNT	LITERAL2
 HSB	LITERAL2	colorMode_
-IMAGE	LITERAL2	textureMode_
+IMAGE	LITERAL2	texture_mode_
 INVERT	LITERAL2	filter_
 JPEG	LITERAL2
 LEFT	LITERAL2	keyCode
 LIGHTEST	LITERAL2	blend_
-LINE	LITERAL2	createShape_
-LINES	LITERAL2	beginShape_
+LINE	LITERAL2	create_shape_
+LINES	LITERAL2	begin_shape_
 LINUX	LITERAL2
 MACOSX	LITERAL2
 MAX_FLOAT	LITERAL2
@@ -152,7 +152,7 @@ MODEL	LITERAL2	textMode_
 MOVE	LITERAL2	cursor_
 MULTIPLY	LITERAL2	blend_
 NORMAL	LITERAL2
-NORMALIZED	LITERAL2	textureMode_
+NORMALIZED	LITERAL2	texture_mode_
 NO_DEPTH_TEST	LITERAL2
 NTSC	LITERAL2
 ONE	LITERAL2
@@ -174,9 +174,9 @@ POSTERIZE	LITERAL2	filter_
 PRESS	LITERAL2
 PROBLEM	LITERAL2
 PROJECT	LITERAL2	strokeCap_
-QUAD	LITERAL2	createShape_
-QUAD_STRIP	LITERAL2	beginShape_
-QUADS	LITERAL2	beginShape_
+QUAD	LITERAL2	create_shape_
+QUAD_STRIP	LITERAL2	begin_shape_
+QUADS	LITERAL2	begin_shape_
 QUARTER_PI	LITERAL2	QUARTER_PI
 RAD_TO_DEG	LITERAL2
 RADIUS	LITERAL2
@@ -195,7 +195,7 @@ SECAM	LITERAL2
 SHAPE	LITERAL2	textMode_
 SHIFT	LITERAL2
 SPECULAR	LITERAL2
-SPHERE	LITERAL2	createShape_
+SPHERE	LITERAL2	create_shape_
 SOFT_LIGHT	LITERAL2	blend_
 SQUARE	LITERAL2	strokeCap_
 SUBTRACT	LITERAL2	blend_
@@ -209,10 +209,10 @@ THIRD_PI	LITERAL2
 THRESHOLD	LITERAL2	filter_
 TIFF	LITERAL2
 TOP	LITERAL2	textAlign_
-TRIANGLE	LITERAL2	createShape_
-TRIANGLE_FAN	LITERAL2	beginShape_
-TRIANGLES	LITERAL2	beginShape_
-TRIANGLE_STRIP	LITERAL2	beginShape_
+TRIANGLE	LITERAL2	create_shape_
+TRIANGLE_FAN	LITERAL2	begin_shape_
+TRIANGLES	LITERAL2	begin_shape_
+TRIANGLE_STRIP	LITERAL2	begin_shape_
 TUNER	LITERAL2
 TWO	LITERAL2
 TWO_PI	LITERAL2	TWO_PI
@@ -336,12 +336,12 @@ beginCamera	FUNCTION1	beginCamera_
 beginContour	FUNCTION1	beginContour_
 beginRaw	FUNCTION1	beginRaw_
 beginRecord	FUNCTION1	beginRecord_
-beginShape	FUNCTION1	beginShape_
+begin_shape	FUNCTION1	begin_shape_
 bezier	FUNCTION1	bezier_
 bezierDetail	FUNCTION1	bezierDetail_
 bezierPoint	FUNCTION1	bezierPoint_
 bezierTangent	FUNCTION1	bezierTangent_
-bezierVertex	FUNCTION1	bezierVertex_
+bezier_vertex	FUNCTION1	bezier_vertex_
 binary	FUNCTION1	binary_
 blend	FUNCTION1	blend_
 blendColor	FUNCTION1	blendColor_
@@ -388,7 +388,7 @@ endCamera	FUNCTION1	endCamera_
 endContour	FUNCTION1	endContour_
 endRaw	FUNCTION1	endRaw_
 endRecord	FUNCTION1	endRecord_
-endShape	FUNCTION1	endShape_
+end_shape	FUNCTION1	end_shape_
 exit	FUNCTION1	exit_
 exp	FUNCTION1	exp_
 expand	FUNCTION1	expand_
@@ -606,8 +606,8 @@ save	FUNCTION2	PImage_save_
 set	FUNCTION2	PImage_set_
 updatePixels	FUNCTION2	PImage_updatePixels_
 pixels	KEYWORD4	pixels
-pmouseX	KEYWORD4	pmouseX
-pmouseY	KEYWORD4	pmouseY
+pmouse_x	KEYWORD4	pmouse_x
+pmouse_y	KEYWORD4	pmouse_y
 point	FUNCTION1	point_
 pointLight	FUNCTION1	pointLight_
 pop_matrix	FUNCTION1	pop_matrix_
@@ -624,11 +624,11 @@ PShader	FUNCTION2	PShader_set_
 PShape	KEYWORD5	PShape
 addChild	FUNCTION2	PShape_addChild_
 beginContour	FUNCTION2	PShape_beginContour_
-beginShape	FUNCTION2	PShape_beginShape_
+begin_shape	FUNCTION2	PShape_begin_shape_
 disableStyle	FUNCTION2	PShape_disableStyle_
 enableStyle	FUNCTION2	PShape_enableStyle_
 endContour	FUNCTION2	PShape_endContour_
-endShape	FUNCTION2	PShape_endShape_
+end_shape	FUNCTION2	PShape_end_shape_
 getChild	FUNCTION2	PShape_getChild_
 getChildCount	FUNCTION2	PShape_getChildCount_
 getVertex	FUNCTION2	PShape_getVertex_
@@ -762,7 +762,7 @@ upper	FUNCTION2	StringList_upper_
 stroke	FUNCTION1	stroke_
 strokeCap	FUNCTION1	strokeCap_
 strokeJoin	FUNCTION1	strokeJoin_
-strokeWeight	FUNCTION1	strokeWeight_
+stroke_weight	FUNCTION1	stroke_weight_
 subset	FUNCTION1	subset_
 Table	KEYWORD5	Table
 addColumn	FUNCTION2	Table_addColumn_
@@ -805,8 +805,8 @@ textLeading	FUNCTION1	textLeading_
 textMode	FUNCTION1	textMode_
 textSize	FUNCTION1	textSize_
 texture	FUNCTION1	texture_
-textureMode	FUNCTION1	textureMode_
-textureWrap	FUNCTION1	textureWrap_
+texture_mode	FUNCTION1	texture_mode_
+texture_wrap	FUNCTION1	texture_wrap_
 textWidth	FUNCTION1	textWidth_
 tint	FUNCTION1	tint_
 translate	FUNCTION1	translate_
