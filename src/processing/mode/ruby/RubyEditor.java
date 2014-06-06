@@ -120,10 +120,6 @@ public class RubyEditor extends Editor {
     }
   }
 
-  public void handlePresent() {
-    System.err.println("handlePresent called");
-  }
-
   public void handleStop() {
     toolbar.activate(RubyToolbar.STOP);
 
