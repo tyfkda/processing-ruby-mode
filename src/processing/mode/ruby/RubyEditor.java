@@ -20,6 +20,9 @@ public class RubyEditor extends Editor {
   RubyMode rbmode;
   PdeKeyListener listener;
 
+  // Runner associated with this editor window
+  private RubyRunner runtime;
+
   protected RubyEditor(Base base, String path, EditorState state, RubyMode mode) {
     super(base, path, state, mode);
     rbmode = mode;
@@ -104,7 +107,7 @@ public class RubyEditor extends Editor {
     prepareRun();
     toolbar.activate(RubyToolbar.RUN);
     try {
-      rbmode.handleRun(sketch, this);
+      runtime = rbmode.handleRun(sketch, this);
     } catch (Exception e) {
       statusError(e);
     }
@@ -115,7 +118,20 @@ public class RubyEditor extends Editor {
   }
 
   public void handleStop() {
+    toolbar.activate(RubyToolbar.STOP);
+
+    try {
+      if (runtime != null) {
+        runtime.close();  // kills the window
+        runtime = null;
+      }
+    } catch (Exception e) {
+      statusError(e);
+    }
+
     toolbar.deactivate(RubyToolbar.RUN);
     toolbar.deactivate(RubyToolbar.STOP);
+
+    toFront();
   }
 }

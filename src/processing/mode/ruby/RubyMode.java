@@ -90,7 +90,8 @@ public class RubyMode extends Mode {
   /**
    * Runs current sketch.
    */
-  public void handleRun(final Sketch sketch, final RunnerListener listener) throws SketchException {
+  public RubyRunner handleRun(final Sketch sketch, final RunnerListener listener) throws SketchException {
+    final RubyRunner runner = new RubyRunner();
     new Thread(new Runnable() {
         @Override
         public void run() {
@@ -105,13 +106,12 @@ public class RubyMode extends Mode {
           File modeFile = sketch.getMode().getContentFile("mode");
           File runnerScriptPath = new File(modeFile, "run.rb");
 
-          RubyRunner runner = new RubyRunner();
-
           runner.launchApplication(sketch.getName(), sourceFile.getAbsolutePath(),
                                    sketchPath, runnerScriptPath.getAbsolutePath(),
                                    classPath, processingCoreJars);
         }
       }).start();
+    return runner;
   }
 
   /**

@@ -15,6 +15,12 @@ public class RubyRunner {
   // Thread transferring remote output stream to our output stream
   protected Thread outThread = null;
 
+  public void close() {
+    if (process != null) {
+      process.destroy();
+    }
+  }
+
   /**
    * @param sketchName  Sketch name.
    * @param sourcePath  Temporary script path, which is put for running the
@@ -65,6 +71,7 @@ public class RubyRunner {
             } catch (InterruptedException ex) {
               System.err.println(ex);
             }
+            process = null;
           } catch (IOException ex) {
             System.err.println("IOException: " + ex);
           }
