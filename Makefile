@@ -23,3 +23,11 @@ $(TARGET):	$(SRCS)
 
 clean:
 	rm -rf $(OUTPUT_PATH)/processing $(TARGET)
+
+RubyMode.zip:	$(TARGET)
+	mkdir tmp && \
+	mkdir tmp/RubyMode && \
+	cp -r others/* tmp/RubyMode/ && \
+	cp $(TARGET) tmp/RubyMode/mode/ && \
+	cd tmp && zip -r ../$@ RubyMode && \
+	cd .. && rm -rf tmp
