@@ -33,13 +33,13 @@ public class RubyRunner {
   /**
    * @param sketchName  Sketch name.
    * @param sourcePath  Temporary script path, which is put for running the
-                        sketch.
+   *                    sketch.
    * @param sketchPath  Path where the sketch is saved.
    * @param runnerScriptPath  ex. ~/Documents/Processing/modes/RubyMode/mode/run.rb
    * @param classPath  .jar files for Processing and RubyMode.
    * @param processingCoreJars  .jar files for Processing core, which are used
-                                to `require` them in Processing::App.
-                                Assumes separator is put at the top.
+   *                            to `require` them in Processing::App.
+   *                            Assumes separator is put at the top.
    */
   public void launchApplication(String sketchName, String sourcePath,
                                 String sketchPath, String runnerScriptPath,
