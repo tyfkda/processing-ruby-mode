@@ -145,13 +145,13 @@ public class RubyMode extends Mode {
     sb.append(outputFolder.getAbsolutePath());
     sb.append(core.getClassPath());
 
-    // Ruby mode libraries.
-    File[] libJars = sketch.getMode().getContentFile("mode").listFiles(JARS);
-    if (libJars != null) {
-      for (final File jar : libJars) {
-        sb.append(File.pathSeparator);
-        sb.append(jar.getAbsolutePath());
-      }
+    // jruby.jar: search under runtime directory.
+    File jrubyJarFile = sketch.getMode().getContentFile("runtime/jruby.jar");
+    if (jrubyJarFile.exists() && jrubyJarFile.isFile()) {
+      sb.append(File.pathSeparator);
+      sb.append(jrubyJarFile.getAbsolutePath());
+    } else {
+      System.err.println("Cannot find jruby.jar");
     }
     return sb.toString();
   }
