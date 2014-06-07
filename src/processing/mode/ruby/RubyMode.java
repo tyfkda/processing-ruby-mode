@@ -51,7 +51,7 @@ public class RubyMode extends Mode {
    */
   @Override
   public String getDefaultExtension() {
-    return "pde";
+    return "rpde";
   }
 
   /**
