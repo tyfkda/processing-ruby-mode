@@ -146,14 +146,13 @@ module Processing
         args << "--present"
       end
       @render_mode  ||= JAVA2D
-        x = options[:x] || 0
-        y = options[:y] || 0
-        args << "--location=#{x}, #{y}"
+      x = options[:x] || 0
+      y = options[:y] || 0
+      args << "--location=#{x}, #{y}"
 
-        title = options[:title] || File.basename(SKETCH_PATH).sub(/(\.rb)$/, '').titleize
-        args << title
-        PApplet.run_sketch(args, self)
-      #end
+      title = options[:title] || File.basename(SKETCH_PATH).sub(/(\.rb)$/, '').titleize
+      args << title
+      PApplet.run_sketch(args, self)
     end
 
     def size(*args)
