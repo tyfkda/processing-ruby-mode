@@ -67,9 +67,7 @@ public class RubyRunner {
 
             try {
               int result = process.waitFor();
-              if (result == 0) {
-                System.err.println("Run finished");
-              } else {
+              if (result != 0) {
                 String[] errorStrings = PApplet.loadStrings(process.getErrorStream());
                 String[] inputStrings = PApplet.loadStrings(process.getInputStream());
                 for (String s : inputStrings)
