@@ -9,6 +9,7 @@ import processing.core.PApplet;
 import processing.mode.java.runner.MessageConsumer;
 import processing.mode.java.runner.MessageSiphon;
 
+import java.awt.Point;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,7 @@ public class RubyRunner implements MessageConsumer {
     command.add(processingCoreJars);  // processing.core.*, concatenated with ':'
     // Options
     command.add(PApplet.ARGS_SKETCH_FOLDER + "=" + sketchPath);
+    command.add(PApplet.ARGS_EDITOR_LOCATION + "=0,0");
 
     process = null;
     new Thread(new Runnable() {
@@ -171,6 +173,18 @@ public class RubyRunner implements MessageConsumer {
   }
 
   synchronized public void message(String s) {
+    // this is the PApplet sending us a message that the applet
+    // is being moved to a new window location
+    if (s.indexOf(PApplet.EXTERNAL_MOVE) == 0) {
+      String nums = s.substring(s.indexOf(' ') + 1).trim();
+      int space = nums.indexOf(' ');
+      int left = Integer.parseInt(nums.substring(0, space));
+      int top = Integer.parseInt(nums.substring(space + 1));
+      // this is only fired when connected to an editor
+      editor.setSketchLocation(new Point(left, top));
+      return;
+    }
+
     System.err.print(s);
     System.err.flush();
   }
