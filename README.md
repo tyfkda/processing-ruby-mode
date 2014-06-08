@@ -22,7 +22,8 @@ You can write graphical application in Ruby.
   * Windows: `%homepath%\Documents\modes\`
   * Linux: `~/sketchbook/modes/`
 + Copy all files under `others/` directory into created `RubyMode` directory
-+ Copy `RubyMode.jar` into `RubyMode` directory
++ Copy `RubyMode.jar` into `RubyMode/mode` directory
++ Reboot Processing
 
 ## How to use Ruby mode in PDE
 * Choose `Ruby` from mode pull down menu in PDE
