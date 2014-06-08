@@ -6,13 +6,18 @@ import processing.app.Preferences;
 import processing.app.RunnerListener;
 import processing.app.exec.StreamRedirectThread;
 import processing.core.PApplet;
+import processing.mode.java.runner.MessageConsumer;
+import processing.mode.java.runner.MessageSiphon;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RubyRunner {
+public class RubyRunner implements MessageConsumer {
   protected Process process;
+
+  // Thread transferring remote error stream to our error stream
+  protected Thread errThread = null;
 
   // Thread transferring remote output stream to our output stream
   protected Thread outThread = null;
@@ -92,12 +97,15 @@ public class RubyRunner {
       System.err.println(ex);
     }
 
+    errThread = new MessageSiphon(process.getErrorStream(), this).getThread();
     outThread = new StreamRedirectThread("JVM stdout Reader",
                                          process.getInputStream(),
                                          System.out);
+    errThread.start();
     outThread.start();
     try {
-      outThread.join();
+      errThread.join(); // Make sure output is forwarded
+      outThread.join(); // before we exit
 
       // At this point, disable the run button.
       // This happens when the sketch is exited by hitting ESC,
@@ -160,5 +168,10 @@ public class RubyRunner {
     // http://dev.processing.org/bugs/show_bug.cgi?id=1188
     params.add("-ea");
     //PApplet.println(PApplet.split(sketch.classPath, ':'));
+  }
+
+  synchronized public void message(String s) {
+    System.err.print(s);
+    System.err.flush();
   }
 }
