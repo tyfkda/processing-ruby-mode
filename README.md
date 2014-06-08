@@ -6,6 +6,7 @@ Ruby Mode for PDE (Processing)
 This is additional mode for PDE, [Processing](http://www.processing.org/) IDE.
 You can write graphical application in Ruby.
 
+Code to run application is taken from [ruby-processing](https://github.com/jashkenas/ruby-processing).
 
 # Development
 ## Requirements
