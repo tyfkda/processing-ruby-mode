@@ -114,6 +114,14 @@ public class RubyMode extends Mode {
   }
 
   /**
+   * Restart sketch.
+   */
+  public void restartSketch(Sketch sketch, File sketchTempFolder, RubyRunner runner) {
+    File sourceFile = dumpSketchToTemporary(sketch, sketchTempFolder);
+    runner.restartSketch(sourceFile.getAbsolutePath());
+  }
+
+  /**
    * Outputs sketch codes into temporary directory, and returns its file.
    */
   private File dumpSketchToTemporary(Sketch sketch, File sketchTempFolder) {

@@ -119,7 +119,10 @@ public class RubyEditor extends Editor {
     prepareRun();
     toolbar.activate(RubyToolbar.RUN);
     try {
-      runtime = rbmode.handleRun(sketch, this, sketchTempFolder);
+      if (runtime == null)
+        runtime = rbmode.handleRun(sketch, this, sketchTempFolder);
+      else
+        rbmode.restartSketch(sketch, sketchTempFolder, runtime);
     } catch (Exception e) {
       statusError(e);
     }

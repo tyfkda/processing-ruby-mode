@@ -61,11 +61,21 @@ module Processing
   end
 
   def self.restart_sketch
-    puts "restart_sketch"
-    p SKETCH_ROOT
     $app.close
     load_and_run_sketch
   end
 end
 
+# Thread to handle messages from PDE.
+t = Thread.new do
+  while $stdin.gets
+    case $_.chomp
+    when /^requestRestart (.*)$/  # Restart request
+      Processing.restart_sketch
+    end
+  end
+end
+
 Processing.load_and_run_sketch
+
+t.join

@@ -11,6 +11,8 @@ import processing.mode.java.runner.MessageSiphon;
 
 import java.awt.Point;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -187,5 +189,15 @@ public class RubyRunner implements MessageConsumer {
 
     System.err.print(s);
     System.err.flush();
+  }
+
+  public void restartSketch(String sourcePath) {
+    OutputStreamWriter writer = new OutputStreamWriter(process.getOutputStream());
+    try {
+      writer.write("requestRestart " + sourcePath + "\n");
+      writer.flush();
+    } catch (Exception e) {
+      System.err.println(e);
+    }
   }
 }
