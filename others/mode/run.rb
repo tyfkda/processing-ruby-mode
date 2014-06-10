@@ -59,6 +59,13 @@ module Processing
   def self.read_sketch_source
     File.read(SKETCH_PATH)
   end
+
+  def self.restart_sketch
+    puts "restart_sketch"
+    p SKETCH_ROOT
+    $app.close
+    load_and_run_sketch
+  end
 end
 
 Processing.load_and_run_sketch
