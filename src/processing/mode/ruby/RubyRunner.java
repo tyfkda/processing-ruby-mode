@@ -192,9 +192,16 @@ public class RubyRunner implements MessageConsumer {
   }
 
   public void restartSketch(String sourcePath) {
+    sendAppMessage("requestRestart " + sourcePath);
+  }
+
+  private void sendAppMessage(String message) {
+    if (process == null)
+      return;
+
     OutputStreamWriter writer = new OutputStreamWriter(process.getOutputStream());
     try {
-      writer.write("requestRestart " + sourcePath + "\n");
+      writer.write(message + "\n");
       writer.flush();
     } catch (Exception e) {
       System.err.println(e);
