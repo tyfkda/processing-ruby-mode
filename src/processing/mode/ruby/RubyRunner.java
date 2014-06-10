@@ -33,9 +33,8 @@ public class RubyRunner implements MessageConsumer {
   }
 
   public void close() {
-    if (process != null) {
-      process.destroy();
-    }
+    if (process != null)
+      sendAppMessage("close");
   }
 
   /**
