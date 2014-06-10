@@ -13,6 +13,7 @@ import processing.mode.java.PdeKeyListener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
@@ -20,6 +21,7 @@ public class RubyEditor extends Editor {
   RubyMode rbmode;
   PdeKeyListener listener;
 
+  private File sketchTempFolder;
   // Runner associated with this editor window
   private RubyRunner runtime;
 
@@ -111,10 +113,13 @@ public class RubyEditor extends Editor {
 
 
   public void handleRun() {
+    if (sketchTempFolder == null)
+      sketchTempFolder = sketch.makeTempFolder();
+
     prepareRun();
     toolbar.activate(RubyToolbar.RUN);
     try {
-      runtime = rbmode.handleRun(sketch, this);
+      runtime = rbmode.handleRun(sketch, this, sketchTempFolder);
     } catch (Exception e) {
       statusError(e);
     }

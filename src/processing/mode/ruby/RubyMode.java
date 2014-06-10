@@ -90,14 +90,13 @@ public class RubyMode extends Mode {
   /**
    * Runs current sketch.
    */
-  public RubyRunner handleRun(final Sketch sketch, final RunnerListener listener) throws SketchException {
+  public RubyRunner handleRun(final Sketch sketch, final RunnerListener listener, final File sketchTempFolder) throws SketchException {
     final RubyRunner runner = new RubyRunner(listener);
     new Thread(new Runnable() {
         @Override
         public void run() {
-          File outputFolder = sketch.makeTempFolder();
-          File sourceFile = dumpSketchToTemporary(sketch, outputFolder);
-          String classPath = getClassPasses(sketch, outputFolder);
+          File sourceFile = dumpSketchToTemporary(sketch, sketchTempFolder);
+          String classPath = getClassPasses(sketch, sketchTempFolder);
           String sketchPath = sketch.getFolder().getAbsolutePath();
 
           Library core = sketch.getMode().getCoreLibrary();
@@ -117,13 +116,13 @@ public class RubyMode extends Mode {
   /**
    * Outputs sketch codes into temporary directory, and returns its file.
    */
-  private File dumpSketchToTemporary(Sketch sketch, File outputFolder) {
+  private File dumpSketchToTemporary(Sketch sketch, File sketchTempFolder) {
     StringBuffer bigCode = new StringBuffer();
     for (SketchCode sc : sketch.getCode())
       bigCode.append(sc.getProgram());
 
     try {
-      final File out = new File(outputFolder, sketch.getName() + ".rb");
+      final File out = new File(sketchTempFolder, sketch.getName() + ".rb");
       final PrintWriter stream = new PrintWriter(new FileWriter(out));
       try {
         stream.write(bigCode.toString());
@@ -138,11 +137,11 @@ public class RubyMode extends Mode {
     }
   }
 
-  static private String getClassPasses(Sketch sketch, File outputFolder) {
+  static private String getClassPasses(Sketch sketch, File sketchTempFolder) {
     // Processing libraries.
     Library core = sketch.getMode().getCoreLibrary();
     StringBuffer sb = new StringBuffer();
-    sb.append(outputFolder.getAbsolutePath());
+    sb.append(sketchTempFolder.getAbsolutePath());
     sb.append(core.getClassPath());
 
     // jruby.jar: search under runtime directory.
