@@ -32,9 +32,19 @@ public class RubyRunner implements MessageConsumer {
       editor = (Editor) listener;
   }
 
+  // Close app window, but process keeps running.
   public void close() {
     if (process != null)
       sendAppMessage("close");
+  }
+
+  // Kill app window and process.
+  public void shutDown() {
+    if (process != null) {
+      sendAppMessage("close");
+      process.destroy();
+      process = null;
+    }
   }
 
   /**
