@@ -28,3 +28,6 @@ Code to run application is taken from [ruby-processing](https://github.com/jashk
 
 ## How to use Ruby mode in PDE
 * Choose `Ruby` from mode pull down menu in PDE
+
+# Info
+* JRuby: jruby-complete-1.7.12.jar
