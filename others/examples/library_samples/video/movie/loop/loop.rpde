@@ -28,3 +28,4 @@ def draw()
   #end
   image(@movie, 0, 0, width, height)
 end
+

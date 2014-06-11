@@ -30,7 +30,7 @@ def setup()
   #puts(count)
 
   @font = load_font("UniversLTStd-Light-48.vlw")
-  @fontSize = 1.5
+  @font_size = 1.5
 
   # for the 256 levels of brightness, distribute the letters across
   # the an array of 256 elements to use for the lookup
@@ -62,14 +62,14 @@ def draw()
   hgap = width / @video.width.to_f
   vgap = height / @video.height.to_f
 
-  scale(max(hgap, vgap) * @fontSize)
-  textFont(@font, @fontSize)
+  scale(max(hgap, vgap) * @font_size)
+  textFont(@font, @font_size)
 
   index = 0
   @video.loadPixels()
   (1...@video.height).each do |y|
     # Move down for next line
-    translate(0,  1.0 / @fontSize)
+    translate(0,  1.0 / @font_size)
 
     push_matrix()
     (0...@video.width).each do |x|
@@ -97,13 +97,13 @@ def draw()
       index += 1
 
       # Move over for next character
-      translate(1.0 / @fontSize, 0)
+      translate(1.0 / @font_size, 0)
     end
     pop_matrix()
   end
   pop_matrix()
 
-  if @cheatScreen
+  if @cheat_screen
     #image(@video, 0, height - @video.height)
     # set() is faster than image() when drawing untransformed images
     set(0, height - @video.height, @video)
@@ -122,10 +122,11 @@ def keyPressed()
   when 'g'
     saveFrame()
   when 'c'
-    @cheatScreen = !@cheatScreen
+    @cheat_screen = !@cheat_screen
   when 'f'
-    @fontSize *= 1.1
+    @font_size *= 1.1
   when 'F'
-    @fontSize *= 0.9
+    @font_size *= 0.9
   end
 end
+

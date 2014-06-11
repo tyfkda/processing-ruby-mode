@@ -25,7 +25,7 @@ end
 
 def draw()
   if @c.available() > 0 # If there's incoming data from the client...
-    data = @c.readString() # ...then grab it and print it
+    data = @c.read_string() # ...then grab it and print it
     puts(data)
   end
 end
