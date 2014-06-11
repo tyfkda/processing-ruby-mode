@@ -61,6 +61,8 @@ public class RubyRunner implements MessageConsumer {
   public void launchApplication(String sketchName, String sourcePath,
                                 String sketchPath, String runnerScriptPath,
                                 String classPath, String processingCoreJars) {
+    String processingRoot = Base.getContentFile("").getAbsolutePath();
+
     final List<String> command = new ArrayList<String>();
     command.add(Base.getJavaPath());  // Java executable file.
     command.add("-cp");
@@ -71,6 +73,7 @@ public class RubyRunner implements MessageConsumer {
     // Below, arguments for runner script.
     command.add(sourcePath);  // Sketch main file name.
     command.add(processingCoreJars);  // processing.core.*, concatenated with ':'
+    command.add(processingRoot);
     // Options
     command.add(PApplet.ARGS_SKETCH_FOLDER + "=" + sketchPath);
     command.add(PApplet.ARGS_EDITOR_LOCATION + "=0,0");

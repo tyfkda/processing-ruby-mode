@@ -109,7 +109,8 @@ module Processing
         [ "#{SKETCH_ROOT}/library/#{library_name}",
           "#{Processing::CONFIG["PROCESSING_ROOT"]}/modes/java/libraries/#{library_name}/library",
           "#{@sketchbook_library_path}/#{library_name}/library",
-          "#{@sketchbook_library_path}/#{library_name}"
+          "#{@sketchbook_library_path}/#{library_name}",
+          "#{@sketchbook_library_path}/../modes/RubyMode/libraries/#{library_name}/library",
         ].each do |path|
           if File.exist?(path) && !Dir.glob(path + "/*.#{ext}").empty?
             return path

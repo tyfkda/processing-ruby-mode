@@ -16,6 +16,7 @@ end
 
 unless defined? PROCESSING_CORE_JARS
   Processing::CONFIG['PROCESSING_CORE_JARS'] = get_class_paths(ARGV.shift)
+  Processing::CONFIG['PROCESSING_ROOT'] = ARGV.shift
 end
 
 require 'ruby-processing/helpers/string'
