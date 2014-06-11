@@ -61,7 +61,7 @@ module Processing
   end
 
   def self.restart_sketch
-    $app.close
+    $app.close if $app
     load_and_run_sketch
   end
 end
@@ -71,8 +71,10 @@ t = Thread.new do
   while $stdin.gets
     case $_.chomp
     when 'close'
-      puts "Close app"
-      break
+      if $app
+        $app.close
+        $app = nil
+      end
     when /^requestRestart (.*)$/  # Restart request
       Processing.restart_sketch
     end
@@ -82,4 +84,3 @@ end
 Processing.load_and_run_sketch
 
 t.join
-$app.close
