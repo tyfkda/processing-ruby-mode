@@ -54,13 +54,10 @@ public class RubyRunner implements MessageConsumer {
    * @param sketchPath  Path where the sketch is saved.
    * @param runnerScriptPath  ex. ~/Documents/Processing/modes/RubyMode/mode/run.rb
    * @param classPath  .jar files for Processing and RubyMode.
-   * @param processingCoreJars  .jar files for Processing core, which are used
-   *                            to `require` them in Processing::App.
-   *                            Assumes separator is put at the top.
    */
   public void launchApplication(String sketchName, String sourcePath,
                                 String sketchPath, String runnerScriptPath,
-                                String classPath, String processingCoreJars) {
+                                String classPath) {
     String processingRoot = Base.getContentFile("").getAbsolutePath();
 
     final List<String> command = new ArrayList<String>();
@@ -72,7 +69,6 @@ public class RubyRunner implements MessageConsumer {
     command.add(runnerScriptPath);  // Script file name for JRuby.
     // Below, arguments for runner script.
     command.add(sourcePath);  // Sketch main file name.
-    command.add(processingCoreJars);  // processing.core.*, concatenated with ':'
     command.add(processingRoot);
     // Options
     command.add(PApplet.ARGS_SKETCH_FOLDER + "=" + sketchPath);

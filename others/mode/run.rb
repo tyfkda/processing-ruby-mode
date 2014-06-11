@@ -14,8 +14,7 @@ def get_class_paths(str)
   str[1..-1].split(separator)
 end
 
-unless defined? PROCESSING_CORE_JARS
-  Processing::CONFIG['PROCESSING_CORE_JARS'] = get_class_paths(ARGV.shift)
+unless Processing::CONFIG.has_key?('PROCESSING_ROOT')
   Processing::CONFIG['PROCESSING_ROOT'] = ARGV.shift
 end
 
