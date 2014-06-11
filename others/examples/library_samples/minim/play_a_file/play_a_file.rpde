@@ -7,12 +7,13 @@
 #
 
 load_library('minim')
+java_import 'ddf.minim.Minim'
 
 def setup()
   size(512, 200, P3D)
   
   # we pass this to Minim so that it can load files from the data directory
-  @minim = Java.DdfMinim.Minim.new(self)
+  @minim = Minim.new(self)
   
   # loadFile will look in all the same places as loadImage does.
   # this means you can find files that are in the data folder and the 

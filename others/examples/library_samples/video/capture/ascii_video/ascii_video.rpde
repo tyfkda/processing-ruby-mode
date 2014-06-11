@@ -9,6 +9,7 @@
 #
 
 load_library("video")
+java_import 'processing.video.Capture'
 
 # All ASCII characters, sorted according to their visual density
 LETTER_ORDER =
@@ -20,11 +21,11 @@ def setup()
 
   # This the default video input, see the GettingStartedCapture
   # example if it creates an error
-  @video = Java.ProcessingVideo.Capture.new(self, 160, 120)
-  
+  @video = Capture.new(self, 160, 120)
+
   # Start capturing the images from the camera
-  @video.start()  
-  
+  @video.start()
+
   count = @video.width * @video.height
   #puts(count)
 
@@ -46,7 +47,7 @@ def setup()
   @bright = Array.new(count) { 128 }
 end
 
-
+# @Override
 def captureEvent(c)
   c.read()
 end
@@ -90,7 +91,7 @@ def draw()
       fill(pixelColor)
       num = @bright[index].to_i
       text(@letters[num], 0, 0)
-      
+
       # Move to the next pixel
       index += 1
 
@@ -127,4 +128,3 @@ def keyPressed()
     @fontSize *= 0.9
   end
 end
-
