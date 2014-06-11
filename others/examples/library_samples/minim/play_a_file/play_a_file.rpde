@@ -2,7 +2,7 @@
 # This sketch demonstrates how to play a file with Minim using an AudioPlayer. <br />
 # It's also a good example of how to draw the waveform of the audio.
 # <p>
-# For more information about Minim and additional features, 
+# For more information about Minim and additional features,
 # visit http://code.compartmental.net/minim/
 #
 
@@ -11,17 +11,17 @@ java_import 'ddf.minim.Minim'
 
 def setup()
   size(512, 200, P3D)
-  
+
   # we pass this to Minim so that it can load files from the data directory
   @minim = Minim.new(self)
-  
+
   # loadFile will look in all the same places as loadImage does.
-  # this means you can find files that are in the data folder and the 
+  # this means you can find files that are in the data folder and the
   # sketch folder. you can also pass an absolute path, or a URL.
   @player = @minim.loadFile("marcus_kellis_theme.mp3")
-  
+
   # play the file from start to finish.
-  # if you want to play the file again, 
+  # if you want to play the file again,
   # you need to call rewind() first.
   @player.play()
 end
@@ -29,7 +29,7 @@ end
 def draw()
   background(0)
   stroke(255)
-  
+
   # draw the waveforms
   # the values returned by left.get() and right.get() will be between -1 and 1,
   # so we need to scale them up to see the waveform
@@ -41,4 +41,3 @@ def draw()
     line(x1, 150 + @player.right.get(i)*50, x2, 150 + @player.right.get(i+1)*50)
   end
 end
-

@@ -16,7 +16,8 @@ def setup()
   @movie.loop()
 end
 
-# @Override
+# Cannot see this method from JRuby, so we cannot see the movie.
+# https://github.com/processing/processing-video/blob/master/src%2Fprocessing%2Fvideo%2FMovie.java#L735
 def movieEvent(m)
   m.read()
 end

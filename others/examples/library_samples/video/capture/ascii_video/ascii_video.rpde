@@ -47,7 +47,8 @@ def setup()
   @bright = Array.new(count) { 128 }
 end
 
-# @Override
+# Cannot see this method from JRuby, so we cannot see the captured image.
+# https://github.com/processing/processing-video/blob/master/src%2Fprocessing%2Fvideo%2FMovie.java#L735
 def captureEvent(c)
   c.read()
 end
