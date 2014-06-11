@@ -108,8 +108,6 @@ module Processing
       extensions.each do |ext|
         [ "#{SKETCH_ROOT}/library/#{library_name}",
           "#{Processing::CONFIG["PROCESSING_ROOT"]}/modes/java/libraries/#{library_name}/library",
-          "#{RP5_ROOT}/library/#{library_name}/library",
-          "#{RP5_ROOT}/library/#{library_name}",
           "#{@sketchbook_library_path}/#{library_name}/library",
           "#{@sketchbook_library_path}/#{library_name}"
         ].each do |path|

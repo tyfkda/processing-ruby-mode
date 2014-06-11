@@ -23,6 +23,10 @@ require 'ruby-processing/helpers/numeric'
 require 'ruby-processing/app'
 
 module Processing
+  def self.exported?
+    false
+  end
+
   def self.load_and_run_sketch
     source = self.read_sketch_source
     has_sketch = !!source.match(/^[^#]*< Processing::App/)
