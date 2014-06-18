@@ -65,7 +65,10 @@ module Processing
   end
 
   def self.restart_sketch
-    $app.close if $app
+    if $app
+      $app.close
+      $app = nil
+    end
     load_and_run_sketch
   end
 end
