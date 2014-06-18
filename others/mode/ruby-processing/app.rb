@@ -226,13 +226,13 @@ module Processing
     def self.proxy_methods(inner_class)
       code = desired_method_names(inner_class).inject('') do |code, method|
         code << <<-EOS
-        def #{method}(*args, &block)                # def rect(*args, &block)
-        if block_given?                           #   if block_given?
-        $app.send :'#{method}', *args, &block   #     $app.send(:rect, *args, &block)
-        else                                      #   else
-        $app.#{method} *args                    #     $app.rect *args
-        end                                       #   end
-        end                                         # end
+          def #{method}(*args, &block)                # def rect(*args, &block)
+            if block_given?                           #   if block_given?
+              $app.send :'#{method}', *args, &block   #     $app.send(:rect, *args, &block)
+            else                                      #   else
+              $app.#{method} *args                    #     $app.rect *args
+            end                                       #   end
+          end                                         # end
         EOS
       end
       inner_class.class_eval(code)
