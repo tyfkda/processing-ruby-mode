@@ -532,7 +532,7 @@ lights	FUNCTION1	lights_
 lightSpecular	FUNCTION1	lightSpecular_
 line	FUNCTION1	line_
 loadBytes	FUNCTION1	loadBytes_
-loadFont	FUNCTION1	loadFont_
+load_font	FUNCTION1	load_font_
 load_image	FUNCTION1	loadImage_
 loadJSONArray	FUNCTION1	loadJSONArray_
 loadJSONObject	FUNCTION1	loadJSONObject_
@@ -559,7 +559,7 @@ month	FUNCTION1	month_
 mouseButton	KEYWORD4	mouseButton
 mouseClicked	FUNCTION4	mouseClicked
 mouseDragged	FUNCTION4	mouseDragged
-mouseMoved	FUNCTION4	mouseMoved
+mouse_moved	FUNCTION4	mouse_moved
 mousePressed	FUNCTION4	mousePressed
 mouse_pressed	KEYWORD4	mouse_pressed
 mouseReleased	FUNCTION1	mouseReleased_
@@ -800,7 +800,7 @@ text	FUNCTION1	text_
 textAlign	FUNCTION1	textAlign_
 textAscent	FUNCTION1	textAscent_
 textDescent	FUNCTION1	textDescent_
-textFont	FUNCTION1	textFont_
+text_font	FUNCTION1	text_font_
 textLeading	FUNCTION1	textLeading_
 textMode	FUNCTION1	textMode_
 textSize	FUNCTION1	textSize_
