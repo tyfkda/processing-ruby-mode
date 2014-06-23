@@ -54,8 +54,12 @@ module Processing
           end
         EOS
       end
-      Object.class_eval(code, SKETCH_PATH, -1)
-      Processing::App.sketch_class.new
+      begin
+        Object.class_eval(code, SKETCH_PATH, -1)
+        Processing::App.sketch_class.new
+      rescue Exception => exc
+        $stderr.print(exc.to_s)
+      end
     end
   end
 
