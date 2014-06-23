@@ -15,6 +15,11 @@ import java.io.FilenameFilter;
 import java.io.PrintWriter;
 import java.io.FileWriter;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.awt.Point;
+import processing.core.PApplet;
+
 public class RubyMode extends Mode {
   private static final FilenameFilter JARS = new FilenameFilter() {
     @Override
@@ -92,6 +97,21 @@ public class RubyMode extends Mode {
    */
   public RubyRunner handleRun(final Sketch sketch, final RunnerListener listener, final File sketchTempFolder) throws SketchException {
     final RubyRunner runner = new RubyRunner(listener);
+
+    final List<String> params = new ArrayList<String>();
+    if (listener instanceof Editor) {
+      Editor editor = (Editor) listener;
+      Point windowLocation = editor.getSketchLocation();
+      if (windowLocation != null) {
+        params.add(PApplet.ARGS_LOCATION + "=" +
+                   windowLocation.x + "," + windowLocation.y);
+      } else {
+        Point editorLocation = editor.getLocation();
+        params.add(PApplet.ARGS_EDITOR_LOCATION + "=" +
+                   editorLocation.x + "," + editorLocation.y);
+      }
+    }
+
     new Thread(new Runnable() {
         @Override
         public void run() {
@@ -104,7 +124,7 @@ public class RubyMode extends Mode {
 
           runner.launchApplication(sketch.getName(), sourceFile.getAbsolutePath(),
                                    sketchPath, runnerScriptPath.getAbsolutePath(),
-                                   classPath);
+                                   classPath, params);
         }
       }).start();
     return runner;

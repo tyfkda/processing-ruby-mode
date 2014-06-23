@@ -61,7 +61,7 @@ public class RubyRunner implements MessageConsumer {
    */
   public void launchApplication(String sketchName, String sourcePath,
                                 String sketchPath, String runnerScriptPath,
-                                String classPath) {
+                                String classPath, List<String> params) {
     String processingRoot = Base.getContentFile("").getAbsolutePath();
 
     final List<String> command = new ArrayList<String>();
@@ -76,7 +76,8 @@ public class RubyRunner implements MessageConsumer {
     command.add(processingRoot);
     // Options
     command.add(PApplet.ARGS_SKETCH_FOLDER + "=" + sketchPath);
-    command.add(PApplet.ARGS_EDITOR_LOCATION + "=0,0");
+    for (String param : params)
+      command.add(param);
 
     process = null;
     new Thread(new Runnable() {
