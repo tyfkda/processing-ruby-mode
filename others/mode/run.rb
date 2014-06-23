@@ -1,7 +1,10 @@
 $LOAD_PATH << File.dirname(__FILE__)
 
-SKETCH_PATH = ARGV.shift unless defined? SKETCH_PATH
-SKETCH_ROOT = File.dirname(SKETCH_PATH) unless defined? SKETCH_ROOT
+unless defined? SKETCH_PATH
+  SKETCH_PATH = ARGV.shift
+  SKETCH_ROOT = File.dirname(SKETCH_PATH)
+  $LOAD_PATH << SKETCH_ROOT
+end
 
 module Processing
   CONFIG = {}
@@ -33,6 +36,10 @@ module Processing
     has_methods = !!source.match(/^[^#]*(def\s+setup|def\s+draw)/)
     has_settings = !!source.match(/^[^#]*(def\s+settings)/)
 
+    loads = Dir.glob("#{SKETCH_ROOT}/*.rb").map do |path|
+      "load '#{File.basename(path)}'"
+    end.join("\n")
+
     if has_sketch
       load SKETCH_PATH
       Processing::App.sketch_class.new if !$app
@@ -50,6 +57,7 @@ module Processing
 
       if has_methods
         code = <<-EOS
+          #{loads}
           class Sketch < Processing::App
             #{settings}
             #{source}
@@ -57,6 +65,7 @@ module Processing
         EOS
       else
         code = <<-EOS
+          #{loads}
           class Sketch < Processing::App
             #{settings}
             def setup

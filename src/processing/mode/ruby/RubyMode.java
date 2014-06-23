@@ -145,26 +145,26 @@ public class RubyMode extends Mode {
    * Outputs sketch codes into temporary directory, and returns its file.
    */
   private File dumpSketchToTemporary(Sketch sketch, File sketchTempFolder) {
-    StringBuffer bigCode = new StringBuffer();
-    for (SketchCode sc : sketch.getCode()) {
-      bigCode.append(sc.getProgram());
-      bigCode.append("\n\n");
-    }
-
-    try {
-      final File out = new File(sketchTempFolder, sketch.getName() + ".rb");
-      final PrintWriter stream = new PrintWriter(new FileWriter(out));
+    File mainFile = null;
+    for (int i = 0, n = sketch.getCodeCount(); i < n; ++i) {
+      SketchCode sc = sketch.getCode(i);
+      final File out = new File(sketchTempFolder, sc.getFileName());
+      if (i == 0)
+        mainFile = out;
       try {
-        stream.write(bigCode.toString());
-      } finally {
-        stream.close();
+        final PrintWriter stream = new PrintWriter(new FileWriter(out));
+        try {
+          stream.write(sc.getProgram());
+        } finally {
+          stream.close();
+        }
+      } catch (Exception ex) {
+        System.err.println("Uncaught exception type:" + ex.getClass());
+        ex.printStackTrace();
+        return null;
       }
-      return out;
-    } catch (Exception ex) {
-      System.err.println("Uncaught exception type:" + ex.getClass());
-      ex.printStackTrace();
-      return null;
     }
+    return mainFile;
   }
 
   static private String getClassPasses(Sketch sketch, File sketchTempFolder) {
