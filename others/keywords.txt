@@ -133,7 +133,7 @@ HALF_PI	LITERAL2	HALF_PI
 HAND	LITERAL2	cursor_
 HARD_LIGHT	LITERAL2	blend_
 HINT_COUNT	LITERAL2
-HSB	LITERAL2	colorMode_
+HSB	LITERAL2	color_mode_
 IMAGE	LITERAL2	texture_mode_
 INVERT	LITERAL2	filter_
 JPEG	LITERAL2
@@ -187,7 +187,7 @@ RELEASE LITERAL2
 REPEAT	LITERAL2
 REPLACE	LITERAL2
 RETURN	LITERAL2
-RGB	LITERAL2	colorMode_
+RGB	LITERAL2	color_mode_
 RIGHT	LITERAL2	keyCode
 ROUND	LITERAL2	strokeCap_
 SCREEN	LITERAL2	blend_
@@ -354,12 +354,12 @@ ceil	FUNCTION1	ceil_
 clear	FUNCTION1	clear_
 clip	FUNCTION1	clip_
 color	FUNCTION1	color_
-colorMode	FUNCTION1	colorMode_
+color_mode	FUNCTION1	color_mode_
 concat	FUNCTION1	concat_
 constrain	FUNCTION1	constrain_
 copy	FUNCTION1	copy_
 cos	FUNCTION1	cos_
-createFont	FUNCTION1	createFont_
+create_font	FUNCTION1	create_font_
 createGraphics	FUNCTION1	createGraphics_
 create_image	FUNCTION1	create_image_
 create_input	FUNCTION1	create_input_
@@ -536,7 +536,7 @@ load_font	FUNCTION1	load_font_
 load_image	FUNCTION1	loadImage_
 loadJSONArray	FUNCTION1	loadJSONArray_
 loadJSONObject	FUNCTION1	loadJSONObject_
-loadPixels	FUNCTION1	loadPixels_
+load_pixels	FUNCTION1	load_pixels_
 load_shader	FUNCTION1	load_shader_
 loadShape	FUNCTION1	loadShape_
 loadStrings	FUNCTION1	loadStrings_
@@ -576,7 +576,7 @@ no_fill	FUNCTION1	no_fill_
 noise	FUNCTION1	noise_
 noiseDetail	FUNCTION1	noiseDetail_
 noiseSeed	FUNCTION1	noiseSeed_
-noLights	FUNCTION1	noLights_
+no_lights	FUNCTION1	no_lights_
 no_loop	FUNCTION1	no_loop_
 norm	FUNCTION1	norm_
 normal	FUNCTION1	normal_
@@ -598,13 +598,13 @@ blend	FUNCTION2	PImage_blend_
 copy	FUNCTION2	PImage_copy_
 filter	FUNCTION2	PImage_filter_
 get	FUNCTION2	PImage_get_
-loadPixels	FUNCTION2	PImage_loadPixels_
+load_pixels	FUNCTION2	PImage_load_pixels_
 mask	FUNCTION2	PImage_mask_
 pixels	KEYWORD2	PImage_pixels
 resize	FUNCTION2	PImage_resize_
 save	FUNCTION2	PImage_save_
 set	FUNCTION2	PImage_set_
-updatePixels	FUNCTION2	PImage_updatePixels_
+update_pixels	FUNCTION2	PImage_update_pixels_
 pixels	KEYWORD4	pixels
 pmouse_x	KEYWORD4	pmouse_x
 pmouse_y	KEYWORD4	pmouse_y
@@ -815,7 +815,7 @@ trim	FUNCTION1	trim_
 TWO_PI	LITERAL2	TWO_PI
 unbinary	FUNCTION1	unbinary_
 unhex	FUNCTION1	unhex_
-updatePixels	FUNCTION1	updatePixels_
+update_pixels	FUNCTION1	update_pixels_
 vertex	FUNCTION1	vertex_
 XML	KEYWORD5	XML
 addChild	FUNCTION2	XML_addChild_
