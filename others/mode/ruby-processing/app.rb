@@ -265,4 +265,11 @@ class Object
     end
     super
   end
+
+  def self.const_missing(name)
+    if $app && $app.class.const_defined?(name)
+      return $app.class.const_get(name)
+    end
+    super
+  end
 end
