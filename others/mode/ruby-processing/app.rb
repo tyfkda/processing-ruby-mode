@@ -257,3 +257,12 @@ module Processing
   end # Processing::Proxy
 
 end # Processing
+
+class Object
+  def method_missing(name, *args)
+    if $app && $app.respond_to?(name)
+      return $app.send(name, *args)
+    end
+    super
+  end
+end
