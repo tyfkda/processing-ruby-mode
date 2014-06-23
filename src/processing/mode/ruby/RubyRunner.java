@@ -10,11 +10,13 @@ import processing.mode.java.runner.MessageConsumer;
 import processing.mode.java.runner.MessageSiphon;
 
 import java.awt.Point;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class RubyRunner implements MessageConsumer {
   protected Process process;
@@ -26,6 +28,8 @@ public class RubyRunner implements MessageConsumer {
   protected Thread outThread = null;
 
   protected Editor editor;
+
+  private StreamFilter errorStreamWithFilter;
 
   public RubyRunner(RunnerListener listener) {
     if (listener instanceof Editor)
@@ -109,10 +113,14 @@ public class RubyRunner implements MessageConsumer {
       System.err.println(ex);
     }
 
+    int lastSeparator = sourcePath.lastIndexOf(File.separatorChar);
+    String dirname = sourcePath.substring(0, lastSeparator + 1);
+    Pattern pattern = Pattern.compile(Pattern.quote(dirname));
+    errorStreamWithFilter = new StreamFilter(System.err, pattern, "");
     errThread = new MessageSiphon(process.getErrorStream(), this).getThread();
     outThread = new StreamRedirectThread("JVM stdout Reader",
                                          process.getInputStream(),
-                                         System.out);
+                                         new StreamFilter(System.out, pattern, ""));
     errThread.start();
     outThread.start();
     try {
@@ -195,8 +203,12 @@ public class RubyRunner implements MessageConsumer {
       return;
     }
 
-    System.err.print(s);
-    System.err.flush();
+    try {
+      errorStreamWithFilter.print(s);
+      errorStreamWithFilter.flush();
+    } catch (Exception e) {
+      System.err.println(e);
+    }
   }
 
   public void restartSketch(String sourcePath) {
