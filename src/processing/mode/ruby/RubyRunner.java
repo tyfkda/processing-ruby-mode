@@ -29,6 +29,8 @@ public class RubyRunner implements MessageConsumer {
 
   protected Editor editor;
 
+  private StreamFilter errorStreamWithFilter;
+
   public RubyRunner(RunnerListener listener) {
     if (listener instanceof Editor)
       editor = (Editor) listener;
@@ -114,6 +116,7 @@ public class RubyRunner implements MessageConsumer {
     int lastSeparator = sourcePath.lastIndexOf(File.separatorChar);
     String dirname = sourcePath.substring(0, lastSeparator + 1);
     Pattern pattern = Pattern.compile(Pattern.quote(dirname));
+    errorStreamWithFilter = new StreamFilter(System.err, pattern, "");
     errThread = new MessageSiphon(process.getErrorStream(), this).getThread();
     outThread = new StreamRedirectThread("JVM stdout Reader",
                                          process.getInputStream(),
@@ -200,8 +203,12 @@ public class RubyRunner implements MessageConsumer {
       return;
     }
 
-    System.err.print(s);
-    System.err.flush();
+    try {
+      errorStreamWithFilter.print(s);
+      errorStreamWithFilter.flush();
+    } catch (Exception e) {
+      System.err.println(e);
+    }
   }
 
   public void restartSketch(String sourcePath) {

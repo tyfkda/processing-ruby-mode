@@ -32,6 +32,14 @@ public class StreamFilter extends OutputStream {
       output();
   }
 
+  public void print(String line) throws IOException {
+    Matcher m = pattern.matcher(line);
+    if (m.find())
+      stream.write(m.replaceAll(replace).getBytes("UTF-8"));
+    else
+      stream.write(line.getBytes("UTF-8"));
+  }
+
   private void output() throws IOException {
     byte[] bytes = buffer.array();
     String line = new String(bytes, "UTF-8");
