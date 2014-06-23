@@ -54,7 +54,7 @@ module Processing
           end
         EOS
       end
-      Object.class_eval code, SKETCH_PATH, -1
+      Object.class_eval(code, SKETCH_PATH, -1)
       Processing::App.sketch_class.new
     end
   end
