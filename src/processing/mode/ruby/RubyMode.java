@@ -9,6 +9,7 @@ import processing.app.RunnerListener;
 import processing.app.Sketch;
 import processing.app.SketchCode;
 import processing.app.SketchException;
+import processing.app.syntax.TokenMarker;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -178,5 +179,10 @@ public class RubyMode extends Mode {
       System.err.println("Cannot find jruby.jar");
     }
     return sb.toString();
+  }
+
+  @Override
+  public TokenMarker createTokenMarker() {
+    return new RubyTokenMarker();
   }
 }
