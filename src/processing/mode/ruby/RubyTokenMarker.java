@@ -57,9 +57,10 @@ public class RubyTokenMarker extends TokenMarker {
       case Token.NULL:
         switch (c) {
         case '#':
-          if (backslash)
-            backslash = false;
-          break;
+          addToken(i - lastOffset, token);
+          addToken(mlength - i, Token.COMMENT1);
+          lastOffset = lastKeyword = mlength;
+          break loop;
         case '"':
           doKeyword(line, i, c);
           if (backslash)
@@ -89,31 +90,6 @@ public class RubyTokenMarker extends TokenMarker {
             lastOffset = lastKeyword = i1;
           } else if (doKeyword(line, i, c))
             break;
-          break;
-        case '/':
-          backslash = false;
-          doKeyword(line, i, c);
-          if (mlength - i > 1) {
-            switch (array[i1]) {
-            case '*':
-              addToken(i - lastOffset, token);
-              lastOffset = lastKeyword = i;
-              if (mlength - i > 2 && array[i + 2] == '*')
-                token = Token.COMMENT2;
-              else
-                token = Token.COMMENT1;
-              break;
-            case '/':
-              addToken(i - lastOffset, token);
-              addToken(mlength - i, Token.COMMENT1);
-              lastOffset = lastKeyword = mlength;
-              break loop;
-            }
-            // https://github.com/processing/processing/issues/1681
-            if (array[i1] != ' ') {
-              i++;  // http://processing.org/bugs/bugzilla/609.html [jdf]
-            }
-          }
           break;
         default:
           backslash = false;
