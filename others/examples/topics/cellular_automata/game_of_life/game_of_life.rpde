@@ -1,0 +1,166 @@
+#
+# A Processing implementation of Game of Life
+# By Joan Soler-Adillon
+#
+# Press SPACE BAR to pause and change the cell's values with the mouse
+# On pause, click to activate/deactivate cells
+# Press R to randomly reset the cells' grid
+# Press C to clear the cells' grid
+#
+# The original Game of Life was created by John Conway in 1970.
+#
+
+# Cell status.
+ALIVE = 1
+DEAD = 0
+
+def setup()
+  size(640, 360)
+
+  # Size of cells
+  @cell_size = 5
+
+  # How likely for a cell to be alive at start (in percentage)
+  @probability_of_alive_at_start = 15
+
+  # Variables for timer
+  @interval = 100
+  @last_recorded_time = 0
+
+  # Colors for active/inactive cells
+  @alive = color(0, 200, 0)
+  @dead = color(0)
+
+  # Pause
+  @pause = false
+
+  # This stroke will draw the background grid
+  stroke(48)
+
+  no_smooth()
+
+  # Initialization of cells
+  randomize_cells()
+  # Buffer to record the state of the cells and use this while changing the others in the interations
+  @cells_buffer = @cells.map {|col| col.map {|cell| 0}}
+  background(0) # Fill in black in case cells don't cover all the windows
+end
+
+def draw()
+  #Draw grid
+  @cells.each_with_index do |col, x|
+    col.each_with_index do |cell, y|
+      if cell == ALIVE
+        fill(@alive)
+      else
+        fill(@dead)
+      end
+      rect(x * @cell_size, y * @cell_size, @cell_size, @cell_size)
+    end
+  end
+  # Iterate if timer ticks
+  if millis() - @last_recorded_time > @interval
+    unless @pause
+      iteration()
+      @last_recorded_time = millis()
+    end
+  end
+
+  # Create  new cells manually on pause
+  if @pause && mouse_pressed
+    # Map and avoid out of bound errors
+    x_cell_over = map(mouse_x, 0, width, 0, width/@cell_size).to_i
+    x_cell_over = constrain(x_cell_over, 0, width/@cell_size-1)
+    y_cell_over = map(mouse_y, 0, height, 0, height/@cell_size).to_i
+    y_cell_over = constrain(y_cell_over, 0, height/@cell_size-1)
+
+    # Check against cells in buffer
+    if @cells_buffer[x_cell_over][y_cell_over] == ALIVE
+      cells[x_cell_over][y_cell_over] = DEAD # Kill
+      fill(@dead) # Fill with kill color
+    else # Cell is dead
+      cells[x_cell_over][y_cell_over] = ALIVE # Make alive
+      fill(@alive) # Fill alive color
+    end
+  elsif @pause && !mouse_pressed # And then save to buffer once mouse goes up
+    # Save cells to buffer (so we opeate with one array keeping the other intact)
+    copy_cells_buffer()
+  end
+end
+
+def iteration() # When the clock ticks
+  # Save cells to buffer (so we opeate with one array keeping the other intact)
+  copy_cells_buffer()
+
+  # Visit each cell:
+  (width / @cell_size).times do |x|
+    (height / @cell_size).times do |y|
+      # And visit all the neighbours of each cell
+      neighbours = count_neighbours(x, y)
+      # We've checked the neigbours: apply rules!
+      if @cells_buffer[x][y] == ALIVE # The cell is alive: kill it if necessary
+        if neighbours < 2 || neighbours > 3
+          @cells[x][y] = DEAD # Die unless it has 2 or 3 neighbours
+        end
+      else # The cell is dead: make it live if necessary
+        if neighbours == 3
+          @cells[x][y] = ALIVE # Only if it has 3 neighbours
+        end
+      end
+    end
+  end
+end
+
+def keyPressed()
+  if key == 'r' || key == 'R'
+    # Restart: reinitialization of cells
+    randomize_cells()
+  end
+  if key == ' ' # On/off of pause
+    @pause = ! @pause
+  end
+  if key == 'c' || key == 'C' # Clear all
+    (width / @cell_size).times do |x|
+      (height / @cell_size).times do |y|
+        @cells[x][y] = 0 # Save all to zero
+      end
+    end
+  end
+end
+
+def randomize_cells()
+  @cells = (0...width / @cell_size).map do |x|
+    (0...height / @cell_size).map do |y|
+      if random(100) > @probability_of_alive_at_start 
+        DEAD
+      else
+        ALIVE
+      end
+    end
+  end
+end
+
+def copy_cells_buffer()
+  (width / @cell_size).times do |x|
+    (height / @cell_size).times do |y|
+      @cells_buffer[x][y] = @cells[x][y]
+    end
+  end
+end
+
+def count_neighbours(x, y)
+  neighbours = 0
+  (x-1 .. x+1).each do |xx|
+    (y-1 .. y+1).each do |yy|
+      if (xx >= 0) && (xx < width / @cell_size) && (yy >= 0) && (yy < height / @cell_size) # Make sure you are not out of bounds
+        unless xx == x && yy == y # Make sure to to check against self
+          if @cells_buffer[xx][yy] == ALIVE
+            neighbours += 1 # Check alive neighbours and count them
+          end
+        end
+      end
+    end
+  end
+  return neighbours
+end
+
