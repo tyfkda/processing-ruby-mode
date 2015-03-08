@@ -11,9 +11,9 @@ public class RubyToolbar extends JavaToolbar {
   static protected final int RUN    = JavaToolbar.RUN;
   static protected final int STOP   = JavaToolbar.STOP;
 
-  static protected final int NEW    = JavaToolbar.NEW;
-  static protected final int OPEN   = JavaToolbar.OPEN;
-  static protected final int SAVE   = JavaToolbar.SAVE;
+  //static protected final int NEW    = JavaToolbar.NEW;
+  //static protected final int OPEN   = JavaToolbar.OPEN;
+  //static protected final int SAVE   = JavaToolbar.SAVE;
 
   public RubyToolbar(RubyEditor editor, Base base) {
     super(editor, base);
@@ -21,8 +21,8 @@ public class RubyToolbar extends JavaToolbar {
 
   public void init() {
     Image[][] images = loadImages();
-    for (int i = 0; i < 5; ++i)
-      addButton(getTitle(i, false), getTitle(i, false), images[i], i == NEW);
+    for (int i = 0; i < 2; ++i)
+      addButton(getTitle(i, false), getTitle(i, false), images[i], false);
   }
 
   public void handlePressed(MouseEvent e, int sel) {
@@ -38,6 +38,7 @@ public class RubyToolbar extends JavaToolbar {
       rbeditor.handleStop();
       break;
 
+      /*
     case OPEN:
 //      popup = menu.getPopupMenu();
       // TODO I think we need a longer chain of accessors here.
@@ -52,6 +53,7 @@ public class RubyToolbar extends JavaToolbar {
     case SAVE:
       rbeditor.handleSave(false);
       break;
+      */
     }
   }
 }
