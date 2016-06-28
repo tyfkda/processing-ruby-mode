@@ -7,14 +7,15 @@ import processing.app.RunnerListener;
 import processing.app.exec.StreamRedirectThread;
 import processing.app.ui.Editor;
 import processing.core.PApplet;
-import processing.mode.java.runner.MessageConsumer;
-import processing.mode.java.runner.MessageSiphon;
+import processing.mode.ruby.runner.MessageConsumer;
+import processing.mode.ruby.runner.MessageSiphon;
 
 import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -32,9 +33,18 @@ public class RubyRunner implements MessageConsumer {
 
   private StreamFilter errorStreamWithFilter;
 
+  protected PrintStream sketchErr;
+  protected PrintStream sketchOut;
+
   public RubyRunner(RunnerListener listener) {
-    if (listener instanceof Editor)
-      editor = (Editor) listener;
+    if (listener instanceof Editor) {
+      this.editor = (Editor) listener;
+      sketchErr = editor.getConsole().getErr();
+      sketchOut = editor.getConsole().getOut();
+    } else {
+      sketchErr = System.err;
+      sketchOut = System.out;
+    }
   }
 
   // Close app window, but process keeps running.

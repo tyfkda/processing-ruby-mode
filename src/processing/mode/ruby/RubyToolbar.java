@@ -1,13 +1,15 @@
 package processing.mode.ruby;
 
-//import processing.app.Base;
-import processing.mode.java.JavaToolbar;
+import processing.app.ui.Editor;
+import processing.app.ui.EditorToolbar;
+//import processing.mode.java.JavaToolbar;
 
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import javax.swing.JPopupMenu;
 
-public class RubyToolbar extends JavaToolbar {
+public class RubyToolbar extends EditorToolbar {
+  private RubyEditor rbeditor;
   //static protected final int RUN    = JavaToolbar.RUN;
   //static protected final int STOP   = JavaToolbar.STOP;
 
@@ -15,8 +17,9 @@ public class RubyToolbar extends JavaToolbar {
   //static protected final int OPEN   = JavaToolbar.OPEN;
   //static protected final int SAVE   = JavaToolbar.SAVE;
 
-  public RubyToolbar(RubyEditor editor /*, Base base*/) {
-    super(editor /*, base*/);
+  public RubyToolbar(Editor editor) {
+    super(editor);
+    rbeditor = (RubyEditor) editor;
   }
 
   /*
@@ -60,4 +63,14 @@ public class RubyToolbar extends JavaToolbar {
     }
   }
   */
+
+  @Override
+  public void handleRun(int modifiers) {
+    rbeditor.handleRun();
+  }
+
+  @Override
+  public void handleStop() {
+    rbeditor.handleStop();
+  }
 }

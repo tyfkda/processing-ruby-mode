@@ -3,6 +3,7 @@ package processing.mode.ruby;
 import processing.app.Base;
 import processing.app.Formatter;
 import processing.app.Language;
+import processing.app.Messages;
 import processing.app.Mode;
 import processing.app.ui.Editor;
 import processing.app.ui.EditorException;
@@ -10,7 +11,7 @@ import processing.app.ui.EditorState;
 import processing.app.ui.EditorToolbar;
 import processing.app.ui.Toolkit;
 import processing.mode.java.AutoFormat;
-import processing.mode.java.JavaToolbar;
+//import processing.mode.java.JavaToolbar;
 //import processing.mode.java.PdeKeyListener;
 
 import java.awt.event.ActionEvent;
@@ -27,16 +28,16 @@ public class RubyEditor extends Editor {
   // Runner associated with this editor window
   private RubyRunner runtime;
 
-  protected RubyEditor(Base base, String path, EditorState state, RubyMode mode) throws EditorException {
+  protected RubyEditor(Base base, String path, EditorState state, Mode mode) throws EditorException {
     super(base, path, state, mode);
-    rbmode = mode;
+    rbmode = (RubyMode) mode;
 
     //listener = new PdeKeyListener(this, textarea);
   }
 
   @Override
   public EditorToolbar createToolbar() {
-    return new RubyToolbar(this /*, base*/);
+    return new RubyToolbar(this);
   }
 
   @Override
@@ -81,8 +82,7 @@ public class RubyEditor extends Editor {
 
   @Override
   public void handleImportLibrary(String arg0) {
-    //Base.showMessage("Sorry", "You can't do that yet."); //TODO implement
-    statusError("Sorry, you can't do that yet."); //TODO implement
+    Messages.showMessage("Sorry", "You can't do that yet."); //TODO implement
   }
 
   @Override

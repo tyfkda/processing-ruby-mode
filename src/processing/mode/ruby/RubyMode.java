@@ -173,7 +173,7 @@ public class RubyMode extends Mode {
     sb.append(core.getClassPath());
 
     // jruby.jar: search under runtime directory.
-    File jrubyJarFile = sketch.getMode().getContentFile("runtime/jruby-complete-9.0.0.0.pre1.jar");
+    File jrubyJarFile = sketch.getMode().getContentFile("runtime/jruby-complete.jar");
     if (jrubyJarFile.exists() && jrubyJarFile.isFile()) {
       sb.append(File.pathSeparator);
       sb.append(jrubyJarFile.getAbsolutePath());
