@@ -1,15 +1,17 @@
 package processing.mode.ruby;
 
 import processing.app.Base;
-import processing.app.Editor;
-import processing.app.EditorState;
 import processing.app.Library;
 import processing.app.Mode;
+import processing.app.Platform;
 import processing.app.RunnerListener;
 import processing.app.Sketch;
 import processing.app.SketchCode;
 import processing.app.SketchException;
 import processing.app.syntax.TokenMarker;
+import processing.app.ui.Editor;
+import processing.app.ui.EditorException;
+import processing.app.ui.EditorState;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -47,7 +49,7 @@ public class RubyMode extends Mode {
    * Create a new editor associated with this mode.
    */
   @Override
-  public Editor createEditor(Base base, String path, EditorState state) {
+  public Editor createEditor(Base base, String path, EditorState state) throws EditorException {
     return new RubyEditor(base, path, state, this);
   }
 
@@ -86,7 +88,7 @@ public class RubyMode extends Mode {
 
   public Library getCoreLibrary() {
     if (coreLibrary == null) {
-      File coreFolder = Base.getContentFile("core");
+      File coreFolder = Platform.getContentFile("core");
       coreLibrary = new Library(coreFolder);
     }
     return coreLibrary;
@@ -171,7 +173,7 @@ public class RubyMode extends Mode {
     sb.append(core.getClassPath());
 
     // jruby.jar: search under runtime directory.
-    File jrubyJarFile = sketch.getMode().getContentFile("runtime/jruby-complete.jar");
+    File jrubyJarFile = sketch.getMode().getContentFile("runtime/jruby-complete-9.0.0.0.pre1.jar");
     if (jrubyJarFile.exists() && jrubyJarFile.isFile()) {
       sb.append(File.pathSeparator);
       sb.append(jrubyJarFile.getAbsolutePath());

@@ -1,15 +1,17 @@
 package processing.mode.ruby;
 
 import processing.app.Base;
-import processing.app.Editor;
-import processing.app.EditorState;
-import processing.app.EditorToolbar;
 import processing.app.Formatter;
+import processing.app.Language;
 import processing.app.Mode;
-import processing.app.Toolkit;
+import processing.app.ui.Editor;
+import processing.app.ui.EditorException;
+import processing.app.ui.EditorState;
+import processing.app.ui.EditorToolbar;
+import processing.app.ui.Toolkit;
 import processing.mode.java.AutoFormat;
 import processing.mode.java.JavaToolbar;
-import processing.mode.java.PdeKeyListener;
+//import processing.mode.java.PdeKeyListener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,22 +21,22 @@ import javax.swing.JMenuItem;
 
 public class RubyEditor extends Editor {
   RubyMode rbmode;
-  PdeKeyListener listener;
+  //PdeKeyListener listener;
 
   private File sketchTempFolder;
   // Runner associated with this editor window
   private RubyRunner runtime;
 
-  protected RubyEditor(Base base, String path, EditorState state, RubyMode mode) {
+  protected RubyEditor(Base base, String path, EditorState state, RubyMode mode) throws EditorException {
     super(base, path, state, mode);
     rbmode = mode;
 
-    listener = new PdeKeyListener(this, textarea);
+    //listener = new PdeKeyListener(this, textarea);
   }
 
   @Override
   public EditorToolbar createToolbar() {
-    return new RubyToolbar(this, base);
+    return new RubyToolbar(this /*, base*/);
   }
 
   @Override
@@ -61,14 +63,14 @@ public class RubyEditor extends Editor {
 
   @Override
   public JMenu buildSketchMenu() { //the 'Sketch' menu, if that wasn't obvious
-    JMenuItem runItem = Toolkit.newJMenuItem(RubyToolbar.getTitle(RubyToolbar.RUN, false), 'R');
+    JMenuItem runItem = Toolkit.newJMenuItem(Language.text("menu.sketch.run"), 'R');
     runItem.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         handleRun();
       }
     });
 
-    JMenuItem stopItem = new JMenuItem(RubyToolbar.getTitle(RubyToolbar.STOP, false));
+    JMenuItem stopItem = new JMenuItem(Language.text("menu.sketch.stop"));
     stopItem.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         handleStop();
@@ -79,7 +81,8 @@ public class RubyEditor extends Editor {
 
   @Override
   public void handleImportLibrary(String arg0) {
-    Base.showMessage("Sorry", "You can't do that yet."); //TODO implement
+    //Base.showMessage("Sorry", "You can't do that yet."); //TODO implement
+    statusError("Sorry, you can't do that yet."); //TODO implement
   }
 
   @Override
@@ -108,7 +111,7 @@ public class RubyEditor extends Editor {
    */
   @Override
   public void deactivateRun() {
-    toolbar.deactivate(RubyToolbar.RUN);
+    toolbar.deactivateRun();
     if (runtime != null) {
       runtime.shutDown();
       runtime = null;
@@ -121,7 +124,7 @@ public class RubyEditor extends Editor {
       sketchTempFolder = sketch.makeTempFolder();
 
     prepareRun();
-    toolbar.activate(RubyToolbar.RUN);
+    toolbar.activateRun();
     try {
       if (runtime == null)
         runtime = rbmode.handleRun(sketch, this, sketchTempFolder);
@@ -133,7 +136,7 @@ public class RubyEditor extends Editor {
   }
 
   public void handleStop() {
-    toolbar.activate(RubyToolbar.STOP);
+    toolbar.activateStop();
 
     try {
       if (runtime != null) {
@@ -143,8 +146,8 @@ public class RubyEditor extends Editor {
       statusError(e);
     }
 
-    toolbar.deactivate(RubyToolbar.RUN);
-    toolbar.deactivate(RubyToolbar.STOP);
+    toolbar.deactivateStop();
+    toolbar.deactivateRun();
 
     toFront();
   }

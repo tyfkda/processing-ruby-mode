@@ -11,6 +11,7 @@ SRCS=$(wildcard $(SRCDIR)/*.java)
 PROCESSING_PATH=/Applications/Processing.app
 PROCESSING_CORE_JAR=$(PROCESSING_PATH)/Contents/Java/core.jar
 PROCESSING_APP_JAR=$(PROCESSING_PATH)/Contents/Java/pde.jar
+PROCESSING_JAVA_MODE_JAR=$(PROCESSING_PATH)/Contents/Java/modes/java/mode/JavaMode.jar
 
 all:	$(DIST_PATH)/$(TARGET)
 
@@ -18,7 +19,7 @@ $(DIST_PATH)/$(TARGET):	$(TARGET)
 	cp $(TARGET) $(DIST_PATH)
 
 $(TARGET):	$(SRCS)
-	javac -d $(OUTPUT_PATH) -sourcepath $(SRC_ROOT_PATH) -cp src:$(PROCESSING_CORE_JAR):$(PROCESSING_APP_JAR) src/processing/mode/ruby/RubyMode.java
+	javac -d $(OUTPUT_PATH) -sourcepath $(SRC_ROOT_PATH) -cp src:$(PROCESSING_CORE_JAR):$(PROCESSING_APP_JAR):$(PROCESSING_JAVA_MODE_JAR) src/processing/mode/ruby/RubyMode.java
 	jar -cvf $@ -C $(OUTPUT_PATH) .
 
 clean:

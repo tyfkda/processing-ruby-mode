@@ -1,10 +1,11 @@
 package processing.mode.ruby;
 
 import processing.app.Base;
-import processing.app.Editor;
+import processing.app.Platform;
 import processing.app.Preferences;
 import processing.app.RunnerListener;
 import processing.app.exec.StreamRedirectThread;
+import processing.app.ui.Editor;
 import processing.core.PApplet;
 import processing.mode.java.runner.MessageConsumer;
 import processing.mode.java.runner.MessageSiphon;
@@ -62,10 +63,11 @@ public class RubyRunner implements MessageConsumer {
   public void launchApplication(String sketchName, String sourcePath,
                                 String sketchPath, String runnerScriptPath,
                                 String classPath, List<String> params) {
+    /*
     String processingRoot = Base.getContentFile("").getAbsolutePath();
 
     final List<String> command = new ArrayList<String>();
-    command.add(Base.getJavaPath());  // Java executable file.
+    command.add(Platform.getJavaPath());  // Java executable file.
     command.add("-cp");
     command.add(classPath);
     getMachineParams(sketchName, command);
@@ -138,6 +140,7 @@ public class RubyRunner implements MessageConsumer {
     } catch (InterruptedException ex) {
       System.err.println(ex);
     }
+  */
   }
 
   // Taken from processing.mode.java.runner.Runner#getMachineParams
@@ -167,7 +170,7 @@ public class RubyRunner implements MessageConsumer {
       params.add("-Xmx" + Preferences.get("run.options.memory.maximum") + "m");
     }
 
-    if (Base.isMacOS()) {
+    if (Platform.isMacOS()) {
       params.add("-Xdock:name=" + sketchName);
 //      params.add("-Dcom.apple.mrj.application.apple.menu.about.name=" +
 //                 sketch.getMainClassName());
