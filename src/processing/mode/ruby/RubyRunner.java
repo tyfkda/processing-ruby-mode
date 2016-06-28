@@ -73,8 +73,7 @@ public class RubyRunner implements MessageConsumer {
   public void launchApplication(String sketchName, String sourcePath,
                                 String sketchPath, String runnerScriptPath,
                                 String classPath, List<String> params) {
-    /*
-    String processingRoot = Base.getContentFile("").getAbsolutePath();
+    String processingRoot = Platform.getContentFile("").getAbsolutePath();
 
     final List<String> command = new ArrayList<String>();
     command.add(Platform.getJavaPath());  // Java executable file.
@@ -150,7 +149,6 @@ public class RubyRunner implements MessageConsumer {
     } catch (InterruptedException ex) {
       System.err.println(ex);
     }
-  */
   }
 
   // Taken from processing.mode.java.runner.Runner#getMachineParams
