@@ -122,7 +122,7 @@ module Processing
       super()
       $app = self
       proxy_java_fields
-      set_sketch_path #unless Processing.online?
+      #set_sketch_path #unless Processing.online?
       mix_proxy_into_inner_classes
       #@started = false
 
