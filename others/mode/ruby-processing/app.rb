@@ -11,7 +11,8 @@ require 'ruby-processing/library_loader'
 Dir["#{Processing::CONFIG["PROCESSING_ROOT"]}/core/library/\*.jar"].each { |jar| require jar }
 
 # Include some core processing classes that we'd like to use:
-%w(PApplet PConstants PFont PImage PShape PShapeOBJ PShapeSVG PStyle PGraphicsJava2D PGraphics PFont PVector PMatrix2D PMatrix3D).each do |klass|
+#   Removed: PGraphicsJava2D
+%w(PApplet PConstants PFont PImage PShape PShapeOBJ PShapeSVG PStyle PGraphics PFont PVector PMatrix2D PMatrix3D).each do |klass|
   java_import "processing.core.#{klass}"
 end
 
@@ -121,7 +122,7 @@ module Processing
       super()
       $app = self
       proxy_java_fields
-      set_sketch_path #unless Processing.online?
+      #set_sketch_path #unless Processing.online?
       mix_proxy_into_inner_classes
       #@started = false
 

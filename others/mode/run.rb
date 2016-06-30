@@ -46,8 +46,10 @@ module Processing
       else
         code = <<-EOS
           class Sketch < Processing::App
-            def setup
+            def settings
               size(DEFAULT_WIDTH, DEFAULT_HEIGHT, JAVA2D)
+            end
+            def setup
               #{source}
               no_loop
             end
@@ -56,7 +58,8 @@ module Processing
       end
       begin
         Object.class_eval(code, SKETCH_PATH, -1)
-        Processing::App.sketch_class.new
+        #Processing::App.sketch_class.new  # sketch_class doesn't exist.
+        sketch = Sketch.new
       rescue Exception => exc
         $stderr.print(exc.to_s)
       end

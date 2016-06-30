@@ -2,10 +2,10 @@ package processing.mode.ruby;
 
 import javax.swing.text.Segment;
 
-import processing.app.Editor;
 import processing.app.syntax.KeywordMap;
 import processing.app.syntax.Token;
 import processing.app.syntax.TokenMarker;
+import processing.app.ui.Editor;
 
 public class RubyTokenMarker extends TokenMarker {
   private KeywordMap keywordColoring;
