@@ -5,6 +5,8 @@ import processing.app.Formatter;
 import processing.app.Language;
 import processing.app.Messages;
 import processing.app.Mode;
+import processing.app.syntax.JEditTextArea;
+import processing.app.syntax.PdeTextAreaDefaults;
 import processing.app.ui.Editor;
 import processing.app.ui.EditorException;
 import processing.app.ui.EditorState;
@@ -33,6 +35,11 @@ public class RubyEditor extends Editor {
     rbmode = (RubyMode) mode;
 
     //listener = new PdeKeyListener(this, textarea);
+  }
+
+  @Override
+  protected JEditTextArea createTextArea() {
+    return new JEditTextArea(new PdeTextAreaDefaults(mode), new RubyInputHandler(this));
   }
 
   @Override
