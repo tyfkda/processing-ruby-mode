@@ -1,7 +1,7 @@
 Ruby Mode for PDE (Processing)
 ==============================
 
-**Working in progress**
+**Worki in progress**
 
 This is additional mode for PDE, [Processing](http://www.processing.org/) IDE.
 You can write graphical application in Ruby.
