@@ -30,4 +30,4 @@ Code to run application is taken from [ruby-processing](https://github.com/jashk
 * Choose `Ruby` from mode pull down menu in PDE
 
 # Info
-* JRuby: jruby-complete-1.7.12.jar
+* JRuby: jruby-complete-9.1.2.jar
