@@ -12,9 +12,6 @@ import processing.app.ui.EditorException;
 import processing.app.ui.EditorState;
 import processing.app.ui.EditorToolbar;
 import processing.app.ui.Toolkit;
-import processing.mode.java.AutoFormat;
-//import processing.mode.java.JavaToolbar;
-//import processing.mode.java.PdeKeyListener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,7 +21,6 @@ import javax.swing.JMenuItem;
 
 public class RubyEditor extends Editor {
   RubyMode rbmode;
-  //PdeKeyListener listener;
 
   private File sketchTempFolder;
   // Runner associated with this editor window
@@ -33,8 +29,6 @@ public class RubyEditor extends Editor {
   protected RubyEditor(Base base, String path, EditorState state, Mode mode) throws EditorException {
     super(base, path, state, mode);
     rbmode = (RubyMode) mode;
-
-    //listener = new PdeKeyListener(this, textarea);
   }
 
   @Override
@@ -60,18 +54,6 @@ public class RubyEditor extends Editor {
 
   @Override
   public JMenu buildFileMenu() {
-    //Okay, this is kinda weird
-    /*
-    String appTitle = PythonToolbar.getTitle(PythonToolbar.EXPORT, false);  //get export string
-
-    JMenuItem exportApplication = Toolkit.newJMenuItem(appTitle, 'E'); //set it up
-
-    exportApplication.addActionListener(new ActionListener() { //yadda yadda
-        public void actionPerformed(ActionEvent e) {
-          handleExportApplication();
-        }
-      });
-    */
     return buildFileMenu(new JMenuItem[] { /*exportApplication*/ }); //and then call the SUPERCLASS method
   }
 
