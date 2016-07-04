@@ -31,24 +31,34 @@ module Processing
     source = self.read_sketch_source
     has_sketch = !!source.match(/^[^#]*< Processing::App/)
     has_methods = !!source.match(/^[^#]*(def\s+setup|def\s+draw)/)
+    has_settings = !!source.match(/^[^#]*(def\s+settings)/)
 
     if has_sketch
       load SKETCH_PATH
       Processing::App.sketch_class.new if !$app
     else
       # For use with "bare" sketches that don't want to define a class or methods
+
+      size_call, source = extract_size_call(source)
+      if size_call
+        if has_settings
+          source = inject_size_call_to_settings(source, size_call)
+        else
+          settings = "def settings; #{size_call}; end"
+        end
+      end
+
       if has_methods
         code = <<-EOS
           class Sketch < Processing::App
+            #{settings}
             #{source}
           end
         EOS
       else
         code = <<-EOS
           class Sketch < Processing::App
-            def settings
-              size(DEFAULT_WIDTH, DEFAULT_HEIGHT, JAVA2D)
-            end
+            #{settings}
             def setup
               #{source}
               no_loop
@@ -77,6 +87,28 @@ module Processing
       $app = nil
     end
     load_and_run_sketch(options)
+  end
+
+  def self.extract_size_call(code)
+    unless code =~ /^(\s*size[\s\(].*)[\n\Z]/
+      return nil, code
+    end
+
+    size_call = $1
+    before = $`
+    after = $'
+    return size_call, "#{before}#{after}"
+  end
+
+  def self.inject_size_call_to_settings(code, size_call)
+    unless code =~ /^([^#]*def\s*settings(\n|\W.*?\n))/
+      return code
+    end
+
+    settings_def = $1
+    before = $`
+    after = $'
+    return "#{before}#{settings_def}#{size_call}\n#{after}"
   end
 end
 
