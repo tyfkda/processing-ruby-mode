@@ -27,7 +27,7 @@ module Processing
     false
   end
 
-  def self.load_and_run_sketch
+  def self.load_and_run_sketch(options={})
     source = self.read_sketch_source
     has_sketch = !!source.match(/^[^#]*< Processing::App/)
     has_methods = !!source.match(/^[^#]*(def\s+setup|def\s+draw)/)
@@ -59,7 +59,7 @@ module Processing
       begin
         Object.class_eval(code, SKETCH_PATH, -1)
         #Processing::App.sketch_class.new  # sketch_class doesn't exist.
-        sketch = Sketch.new
+        sketch = Sketch.new(options)
       rescue Exception => exc
         $stderr.print(exc.to_s)
       end
@@ -71,12 +71,12 @@ module Processing
     File.read(SKETCH_PATH)
   end
 
-  def self.restart_sketch
+  def self.restart_sketch(options)
     if $app
       $app.close
       $app = nil
     end
-    load_and_run_sketch
+    load_and_run_sketch(options)
   end
 end
 
@@ -89,8 +89,9 @@ t = Thread.new do
         $app.close
         $app = nil
       end
-    when /^requestRestart (.*)$/  # Restart request
-      Processing.restart_sketch
+    when /^requestRestart\?(.*)$/  # Restart request
+      options = $1.split('&').inject({}) {|h, e| k, v = e.split('=', 2); h[k.intern] = v; h}
+      Processing.restart_sketch(options)
     end
   end
 end

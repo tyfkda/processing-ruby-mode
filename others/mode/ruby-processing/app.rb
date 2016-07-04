@@ -148,9 +148,9 @@ module Processing
         args << "--present"
       end
       @render_mode  ||= JAVA2D
-      #x = options[:x] || 0
-      #y = options[:y] || 0
-      #args << "--location=#{x}, #{y}"
+      if options[:x] && options[:y]
+        args << "--location=#{options[:x]},#{options[:y]}"
+      end
 
       title = options[:title] || File.basename(SKETCH_PATH).sub(/(\.rb)$/, '').titleize
       args << title

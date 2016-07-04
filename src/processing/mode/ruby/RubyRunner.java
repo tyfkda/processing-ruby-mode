@@ -236,7 +236,15 @@ public class RubyRunner implements MessageConsumer {
   }
 
   public void restartSketch(String sourcePath) {
-    sendAppMessage("requestRestart " + sourcePath);
+    List<String> params = new ArrayList<String>();
+    if (editor != null) {
+      Point location = editor.getSketchLocation();
+      params.add("x=" + location.x);
+      params.add("y=" + location.y);
+    }
+    params.add("sourcePath=" + sourcePath);
+
+    sendAppMessage("requestRestart?" + String.join("&", params));
   }
 
   private void sendAppMessage(String message) {
