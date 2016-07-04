@@ -119,10 +119,6 @@ public class RubyEditor extends Editor {
   @Override
   public void deactivateRun() {
     toolbar.deactivateRun();
-    if (runtime != null) {
-      runtime.shutDown();
-      runtime = null;
-    }
   }
 
 

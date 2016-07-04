@@ -17,6 +17,8 @@ Dir["#{Processing::CONFIG["PROCESSING_ROOT"]}/core/library/\*.jar"].each { |jar|
 end
 
 module Processing
+  DEACTIVATE_RUN = '__DEACTIVATE_RUN__'
+
   # This is the main Ruby-Processing class, and is what you'll
   # inherit from when you create a sketch. This class can call
   # all of the methods available in Processing, and has two
@@ -34,7 +36,7 @@ module Processing
     alias_method :stroke_width, :stroke_weight
     alias_method :rgb, :color
     alias_method :gray, :color
-
+    field_reader :surface
 
     # When certain special methods get added to the sketch, we need to let
     # Processing call them by their expected Java names.
@@ -181,11 +183,23 @@ module Processing
     end
 
 
-    # Cleanly close and shutter a running sketch.
+    # Close and shutter a running sketch. But don't exit.
+    # @HACK seems to work with watch until we find a better
+    # way of disposing of sketch window...
     def close
-        control_panel.remove if respond_to?(:control_panel)
-        self.dispose
-        self.frame.dispose
+      control_panel.remove if respond_to?(:control_panel)
+      surface.stopThread
+      surface.setVisible(false) if surface.isStopped
+      dispose
+    end
+
+    def exit
+      control_panel.remove if respond_to?(:control_panel)
+      # Calling PApplet#exit kills own process, which causes slow restart.
+      #super()
+      self.close
+      $app = nil
+      $stderr.puts DEACTIVATE_RUN
     end
 
 

@@ -21,6 +21,12 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class RubyRunner implements MessageConsumer {
+  /**
+   * When run externally to a PdeEditor,
+   * this is sent by the sketch when it closed.
+   */
+  static private final String EXTERNAL_DEACTIVATE_RUN = "__DEACTIVATE_RUN__";
+
   protected Process process;
 
   // Thread transferring remote error stream to our error stream
@@ -212,6 +218,10 @@ public class RubyRunner implements MessageConsumer {
       int top = Integer.parseInt(nums.substring(space + 1));
       // this is only fired when connected to an editor
       editor.setSketchLocation(new Point(left, top));
+      return;
+    }
+    if (s.indexOf(EXTERNAL_DEACTIVATE_RUN) == 0) {
+      editor.deactivateRun();
       return;
     }
 
