@@ -18,12 +18,15 @@ all:	$(DIST_PATH)/$(TARGET)
 $(DIST_PATH)/$(TARGET):	$(TARGET)
 	cp $(TARGET) $(DIST_PATH)
 
-$(TARGET):	$(SRCS)
+$(TARGET):	$(SRCS) $(OUTPUT_PATH)
 	javac -d $(OUTPUT_PATH) -sourcepath $(SRC_ROOT_PATH) -cp src:$(PROCESSING_CORE_JAR):$(PROCESSING_APP_JAR):$(PROCESSING_JAVA_MODE_JAR) src/processing/mode/ruby/RubyMode.java
 	jar -cvf $@ -C $(OUTPUT_PATH) .
 
+ $(OUTPUT_PATH):
+	mkdir -p  $(OUTPUT_PATH)
+
 clean:
-	rm -rf $(OUTPUT_PATH)/processing $(TARGET)
+	rm -rf $(OUTPUT_PATH) $(TARGET)
 
 RubyMode.zip:	$(TARGET)
 	mkdir RubyMode && \
