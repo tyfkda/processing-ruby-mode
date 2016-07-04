@@ -107,12 +107,14 @@ public class RubyRunner implements MessageConsumer {
             try {
               int result = process.waitFor();
               if (result != 0) {
-                String[] errorStrings = PApplet.loadStrings(process.getErrorStream());
-                String[] inputStrings = PApplet.loadStrings(process.getInputStream());
-                for (String s : inputStrings)
-                  System.out.println(s);
-                for (String s : errorStrings)
-                  System.err.println(s);
+                if (process != null) {
+                  String[] errorStrings = PApplet.loadStrings(process.getErrorStream());
+                  String[] inputStrings = PApplet.loadStrings(process.getInputStream());
+                  for (String s : inputStrings)
+                    System.out.println(s);
+                  for (String s : errorStrings)
+                    System.err.println(s);
+                }
               }
             } catch (InterruptedException ex) {
               System.err.println(ex);

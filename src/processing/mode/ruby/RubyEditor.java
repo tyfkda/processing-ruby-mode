@@ -38,6 +38,12 @@ public class RubyEditor extends Editor {
   }
 
   @Override
+  public void dispose() {
+    releaseRuntime();
+    super.dispose();
+  }
+
+  @Override
   protected JEditTextArea createTextArea() {
     return new JEditTextArea(new PdeTextAreaDefaults(mode), new RubyInputHandler(this));
   }
@@ -153,5 +159,12 @@ public class RubyEditor extends Editor {
     toolbar.deactivateRun();
 
     toFront();
+  }
+
+  private void releaseRuntime() {
+    if (runtime == null)
+      return;
+    runtime.shutDown();
+    runtime = null;
   }
 }
