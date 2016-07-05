@@ -5,6 +5,7 @@ import processing.app.Formatter;
 import processing.app.Language;
 import processing.app.Messages;
 import processing.app.Mode;
+import processing.app.SketchCode;
 import processing.app.syntax.JEditTextArea;
 import processing.app.syntax.PdeTextAreaDefaults;
 import processing.app.ui.Editor;
@@ -29,6 +30,11 @@ public class RubyEditor extends Editor {
   protected RubyEditor(Base base, String path, EditorState state, Mode mode) throws EditorException {
     super(base, path, state, mode);
     rbmode = (RubyMode) mode;
+
+    // prepareRun() assumes all SketchCode has a document, so make it sure.
+    for (SketchCode sc : sketch.getCode())
+      setCode(sc);
+    setCode(sketch.getCode(0));
   }
 
   @Override
