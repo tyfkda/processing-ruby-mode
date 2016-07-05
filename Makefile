@@ -6,7 +6,7 @@ OUTPUT_PATH=classes
 
 DIST_PATH=~/Documents/Processing/modes/RubyMode/mode/
 
-SRCS=$(wildcard $(SRCDIR)/*.java)
+SRCS=$(wildcard $(SRCDIR)/**/*.java)
 
 PROCESSING_PATH=/Applications/Processing.app
 PROCESSING_CORE_JAR=$(PROCESSING_PATH)/Contents/Java/core.jar
