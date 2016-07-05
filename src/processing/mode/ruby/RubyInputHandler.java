@@ -1,9 +1,11 @@
 package processing.mode.ruby;
 
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import processing.app.Sketch;
 import processing.app.syntax.JEditTextArea;
 import processing.app.syntax.PdeInputHandler;
 import processing.app.ui.Editor;
@@ -11,32 +13,42 @@ import processing.app.ui.Editor;
 public class RubyInputHandler extends PdeInputHandler {
   private static Pattern reIndent = Pattern.compile("^(\\s+)");
 
-  private final RubyEditor rbEditor;
+  private final Editor editor;
 
   public RubyInputHandler(final Editor editor) {
-    rbEditor = (RubyEditor) editor;
+    this.editor = editor;
   }
 
   @Override
   public boolean handlePressed(final KeyEvent event) {
-    final JEditTextArea textArea = getTextArea();
-    final int code = event.getKeyCode();
+    char c = event.getKeyChar();
+    int code = event.getKeyCode();
+
+    Sketch sketch = editor.getSketch();
+    JEditTextArea textarea = editor.getTextArea();
+
+    if ((event.getModifiers() & InputEvent.META_MASK) != 0) {
+      //event.consume();  // does nothing
+      return false;
+    }
+
+    if ((code == KeyEvent.VK_BACK_SPACE) || (code == KeyEvent.VK_TAB) ||
+        (code == KeyEvent.VK_ENTER) || ((c >= 32) && (c < 128))) {
+      sketch.setModified(true);
+    }
+
     if (code == KeyEvent.VK_ENTER) {
-      textArea.setSelectedText(newline());
+      textarea.setSelectedText(newline());
     }
     return false;
   }
 
   private String newline() {
-    final JEditTextArea textArea = getTextArea();
+    final JEditTextArea textArea = editor.getTextArea();
     final String line = textArea.getLineText(textArea.getCaretLine());
     Matcher m = reIndent.matcher(line);
     if (!m.find())
       return "\n";
     return "\n" + m.group(1);
-  }
-
-  private JEditTextArea getTextArea() {
-    return rbEditor.getTextArea();
   }
 }
