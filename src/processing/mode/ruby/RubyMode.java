@@ -146,8 +146,10 @@ public class RubyMode extends Mode {
    */
   private File dumpSketchToTemporary(Sketch sketch, File sketchTempFolder) {
     StringBuffer bigCode = new StringBuffer();
-    for (SketchCode sc : sketch.getCode())
+    for (SketchCode sc : sketch.getCode()) {
       bigCode.append(sc.getProgram());
+      bigCode.append("\n\n");
+    }
 
     try {
       final File out = new File(sketchTempFolder, sketch.getName() + ".rb");
