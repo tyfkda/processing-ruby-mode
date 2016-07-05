@@ -1,5 +1,11 @@
 package processing.mode.ruby;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+
 import processing.app.Base;
 import processing.app.Formatter;
 import processing.app.Language;
@@ -13,12 +19,7 @@ import processing.app.ui.EditorException;
 import processing.app.ui.EditorState;
 import processing.app.ui.EditorToolbar;
 import processing.app.ui.Toolkit;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
+import processing.app.ui.pdex.GeneralTextArea;
 
 public class RubyEditor extends Editor {
   RubyMode rbmode;
@@ -30,6 +31,8 @@ public class RubyEditor extends Editor {
   protected RubyEditor(Base base, String path, EditorState state, Mode mode) throws EditorException {
     super(base, path, state, mode);
     rbmode = (RubyMode) mode;
+
+    ((GeneralTextArea) textarea).setMode(mode);
 
     // prepareRun() assumes all SketchCode has a document, so make it sure.
     for (SketchCode sc : sketch.getCode())
@@ -45,7 +48,7 @@ public class RubyEditor extends Editor {
 
   @Override
   protected JEditTextArea createTextArea() {
-    return new JEditTextArea(new PdeTextAreaDefaults(mode), new RubyInputHandler(this));
+    return new GeneralTextArea(new PdeTextAreaDefaults(mode), this);
   }
 
   @Override

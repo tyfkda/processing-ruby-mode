@@ -1,4 +1,4 @@
-package processing.mode.ruby;
+package processing.app.ui.pdex;
 
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -10,12 +10,12 @@ import processing.app.syntax.JEditTextArea;
 import processing.app.syntax.PdeInputHandler;
 import processing.app.ui.Editor;
 
-public class RubyInputHandler extends PdeInputHandler {
+public class GeneralInputHandler extends PdeInputHandler {
   private static Pattern reIndent = Pattern.compile("^(\\s+)");
 
   private final Editor editor;
 
-  public RubyInputHandler(final Editor editor) {
+  public GeneralInputHandler(final Editor editor) {
     this.editor = editor;
   }
 
