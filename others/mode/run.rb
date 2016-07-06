@@ -32,29 +32,31 @@ module Processing
 
   def self.load_and_run_sketch(options={})
     source = self.read_sketch_source
-    has_sketch = !!source.match(/^[^#]*< Processing::App/)
-    has_methods = !!source.match(/^[^#]*(def\s+setup|def\s+draw)/)
-    has_settings = !!source.match(/^[^#]*(def\s+settings)/)
+    has_sketch = !!source.match(/^[^#]*<\s+Processing::App\b/)
+    has_methods = !!source.match(/^[^#]*(def\s+setup|def\s+draw)\b/)
+    has_settings = !!source.match(/^[^#]*(def\s+settings)\b/)
 
     loads = Dir.glob("#{SKETCH_ROOT}/*.rb").map do |path|
       "load '#{File.basename(path)}'"
     end.join("\n")
 
-    if has_sketch
-      load SKETCH_PATH
-      Processing::App.sketch_class.new if !$app
-    else
-      # For use with "bare" sketches that don't want to define a class or methods
+    # For use with "bare" sketches that don't want to define a class or methods
 
-      size_call, source = extract_size_call(source)
-      if size_call
-        if has_settings
-          source = inject_size_call_to_settings(source, size_call)
-        else
-          settings = "def settings; #{size_call}; end"
-        end
+    size_call, source = extract_size_call(source)
+    if size_call
+      if has_settings
+        source = inject_size_call_to_settings(source, size_call)
+      else
+        settings = "def settings; #{size_call}; end"
       end
+    end
 
+    if has_sketch
+      if settings  # settings method doesn't exist.
+        source = inject_settings_to_sketch_class(source, settings)
+      end
+      code = source
+    else
       if has_methods
         code = <<-EOS
           #{loads}
@@ -75,13 +77,13 @@ module Processing
           end
         EOS
       end
-      begin
-        Object.class_eval(code, SKETCH_PATH, -1)
-        #Processing::App.sketch_class.new  # sketch_class doesn't exist.
-        sketch = Sketch.new(options)
-      rescue Exception => exc
-        $stderr.print(exc.to_s)
-      end
+    end
+
+    begin
+      Object.class_eval(code, SKETCH_PATH, -1)
+      Processing::App.sketch_class.new(options)
+    rescue Exception => exc
+      $stderr.print(exc.to_s)
     end
   end
 
@@ -118,6 +120,17 @@ module Processing
     before = $`
     after = $'
     return "#{before}#{settings_def}#{size_call}\n#{after}"
+  end
+
+  def self.inject_settings_to_sketch_class(code, settings)
+    unless code =~ /^([^#]*<\s+Processing::App(\n|\W.*?\n))/
+      return code
+    end
+
+    class_def = $1
+    before = $`
+    after = $'
+    return "#{before}#{class_def}#{settings}\n#{after}"
   end
 end
 
