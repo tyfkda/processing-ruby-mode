@@ -105,6 +105,7 @@ public class RubyEditor extends Editor {
 
   @Override
   public void internalCloseRunner() {
+    releaseRuntime();
   }
 
   /**
