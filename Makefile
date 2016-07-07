@@ -1,25 +1,35 @@
-TARGET=RubyMode.jar
+NAME=RubyMode
+JAR_NAME=$(NAME).jar
+TARGET=dist/RubyMode/$(JAR_NAME)
+ZIP_NAME=$(NAME).zip
+
+DIST_DIR=dist
+DIST_ZIP=$(DIST_DIR)/$(ZIP_NAME)
 
 SRC_ROOT_PATH=src
-SRCDIR=$(SRC_ROOT_PATH)/processing/mode/ruby
+SRC_DIR=$(SRC_ROOT_PATH)/processing/mode/ruby
 OUTPUT_PATH=classes
 
-DIST_PATH=~/Documents/Processing/modes/RubyMode/mode/
-
 rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst *,%,$2),$d))
-SRCS=$(call rwildcard,$(SRCDIR),*.java)
+SRCS=$(call rwildcard,$(SRC_DIR),*.java)
 
-PROCESSING_PATH=/Applications/Processing.app
-PROCESSING_CORE_JAR=$(PROCESSING_PATH)/Contents/Java/core.jar
-PROCESSING_APP_JAR=$(PROCESSING_PATH)/Contents/Java/pde.jar
+P5_PATH=/Applications/Processing.app
+P5_CORE_JAR=$(P5_PATH)/Contents/Java/core.jar
+P5_APP_JAR=$(P5_PATH)/Contents/Java/pde.jar
 
-all:	$(DIST_PATH)/$(TARGET)
+P5_RBMODE_PATH=~/Documents/Processing/modes/RubyMode
+P5_RBMODE_JAR_PATH=$(P5_RBMODE_PATH)/mode/$(JAR_NAME)
 
-$(DIST_PATH)/$(TARGET):	$(TARGET)
-	cp $(TARGET) $(DIST_PATH)
+all:	$(P5_RBMODE_JAR_PATH)
+
+zip:	$(DIST_ZIP)
+
+$(P5_RBMODE_JAR_PATH):	$(TARGET)
+	cp $(TARGET) $@
 
 $(TARGET):	$(SRCS) $(OUTPUT_PATH)
-	javac -d $(OUTPUT_PATH) -sourcepath $(SRC_ROOT_PATH) -cp src:$(PROCESSING_CORE_JAR):$(PROCESSING_APP_JAR) src/processing/mode/ruby/RubyMode.java
+	javac -d $(OUTPUT_PATH) -sourcepath $(SRC_ROOT_PATH) \
+	  -cp src:$(P5_CORE_JAR):$(P5_APP_JAR) src/processing/mode/ruby/RubyMode.java
 	jar -cvf $@ -C $(OUTPUT_PATH) .
 
  $(OUTPUT_PATH):
@@ -28,9 +38,7 @@ $(TARGET):	$(SRCS) $(OUTPUT_PATH)
 clean:
 	rm -rf $(OUTPUT_PATH) $(TARGET)
 
-RubyMode.zip:	$(TARGET)
-	mkdir RubyMode && \
-	cp -r others/* RubyMode/ && \
-	cp $(TARGET) RubyMode/mode/ && \
-	zip -r $@ RubyMode && \
-	rm -rf RubyMode
+$(DIST_ZIP):	$(TARGET)
+	cd dist && \
+	rm -f $(ZIP_NAME) && \
+	zip -r $(ZIP_NAME) RubyMode -x '*.DS_Store'
