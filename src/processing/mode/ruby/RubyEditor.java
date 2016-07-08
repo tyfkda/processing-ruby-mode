@@ -22,11 +22,12 @@ import processing.app.ui.Toolkit;
 import processing.app.ui.pdex.GeneralTextArea;
 
 public class RubyEditor extends Editor {
-  RubyMode rbmode;
+  private RubyMode rbmode;
 
   private File sketchTempFolder;
   // Runner associated with this editor window
   private RubyRunner runtime;
+  private boolean prepareRunCalling;  // Flag to prevent terminating runtime when prepareRun
 
   protected RubyEditor(Base base, String path, EditorState state, Mode mode) throws EditorException {
     super(base, path, state, mode);
@@ -105,7 +106,15 @@ public class RubyEditor extends Editor {
 
   @Override
   public void internalCloseRunner() {
-    releaseRuntime();
+    if (!prepareRunCalling)
+      releaseRuntime();
+  }
+
+  @Override
+  public void prepareRun() {
+    prepareRunCalling = true;
+    super.prepareRun();
+    prepareRunCalling = false;
   }
 
   /**
