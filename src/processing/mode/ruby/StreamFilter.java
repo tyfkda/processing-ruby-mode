@@ -2,21 +2,27 @@ package processing.mode.ruby;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StreamFilter extends OutputStream {
+  private final static int INITIAL_LENGTH = 256;
+  private final static Charset UTF8 = Charset.forName("UTF-8");
+
   private OutputStream stream;
   private Pattern pattern;
   private String replace;
-  private ByteBuffer buffer;
+  private byte[] bytes;
+  private int pointer;
 
   public StreamFilter(OutputStream stream, Pattern pattern, String replace) {
     this.stream = stream;
     this.pattern = pattern;
     this.replace = replace;
-    buffer = ByteBuffer.allocate(1024);
+    bytes = new byte[INITIAL_LENGTH];
+    clear();
   }
 
   @Override
@@ -27,7 +33,9 @@ public class StreamFilter extends OutputStream {
 
   @Override
   public void write(int b) throws IOException {
-    buffer.put((byte) b);
+    bytes[pointer++] = (byte) b;
+    if (pointer >= bytes.length)
+      expand();
     if (b == '\n')
       output();
   }
@@ -35,19 +43,24 @@ public class StreamFilter extends OutputStream {
   public void print(String line) throws IOException {
     Matcher m = pattern.matcher(line);
     if (m.find())
-      stream.write(m.replaceAll(replace).getBytes("UTF-8"));
+      stream.write(m.replaceAll(replace).getBytes(UTF8));
     else
-      stream.write(line.getBytes("UTF-8"));
+      stream.write(line.getBytes(UTF8));
   }
 
   private void output() throws IOException {
-    byte[] bytes = buffer.array();
-    String line = new String(bytes, "UTF-8");
-    Matcher m = pattern.matcher(line);
-    if (m.find())
-      stream.write(m.replaceAll(replace).getBytes("UTF-8"));
-    else
-      stream.write(bytes);
-    buffer.clear();
+    String line = new String(bytes, 0, pointer, UTF8);
+    print(line);
+    clear();
+  }
+
+  private void clear() {
+    pointer = 0;
+  }
+
+  private void expand() {
+    int newLength = bytes.length * 2;
+    byte[] newBytes = Arrays.copyOf(bytes, newLength);
+    bytes = newBytes;
   }
 }
