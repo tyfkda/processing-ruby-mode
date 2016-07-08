@@ -1,4 +1,4 @@
-package processing.mode.ruby;
+package processing.mode.ruby.util;
 
 import java.io.IOException;
 import java.io.OutputStream;

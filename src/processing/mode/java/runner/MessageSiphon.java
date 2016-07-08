@@ -21,7 +21,7 @@
   Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-package processing.mode.ruby.runner;
+package processing.mode.java.runner;
 
 import java.io.*;
 
@@ -84,8 +84,8 @@ public class MessageSiphon implements Runnable {
       thread = null;
     }
   }
-
-
+  
+  
   public Thread getThread() {
     return thread;
   }

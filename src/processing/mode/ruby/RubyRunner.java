@@ -7,8 +7,9 @@ import processing.app.RunnerListener;
 import processing.app.exec.StreamRedirectThread;
 import processing.app.ui.Editor;
 import processing.core.PApplet;
-import processing.mode.ruby.runner.MessageConsumer;
-import processing.mode.ruby.runner.MessageSiphon;
+import processing.mode.java.runner.MessageConsumer;
+import processing.mode.java.runner.MessageSiphon;
+import processing.mode.ruby.util.StreamFilter;
 
 import java.awt.Point;
 import java.io.File;
