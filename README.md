@@ -24,7 +24,7 @@ Code to run application is taken from [ruby-processing](https://github.com/jashk
     * Linux: `~/sketchbook/modes/`
     + Copy all files under `dist/RubyMode/` directory into created `RubyMode` directory
   + Copy all files under `dist/RubyMode/` into Processing `RubyMode` directory.
-  + Reboot Processing
+  + Reboot PDE.
 
 ## How to use Ruby mode in PDE
   * Choose `Ruby` from mode pull down menu in PDE
@@ -32,4 +32,4 @@ Code to run application is taken from [ruby-processing](https://github.com/jashk
 ![ruby-mode](img/ruby-mode.png)
 
 # Info
-  * JRuby: jruby-complete-9.1.2.jar
+  * JRuby: jruby-complete-9.1.2.0.jar
