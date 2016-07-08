@@ -86,10 +86,6 @@ module Processing
       @sketch_class = subclass
     end
 
-    def self.has_slider(*args) #:nodoc:
-      raise "has_slider has been replaced with a nicer control_panel library. Check it out."
-    end
-
     @@library_loader = LibraryLoader.new
     class << self
       def load_libraries(*args)
@@ -187,14 +183,12 @@ module Processing
     # @HACK seems to work with watch until we find a better
     # way of disposing of sketch window...
     def close
-      control_panel.remove if respond_to?(:control_panel)
       surface.stopThread
       surface.setVisible(false) if surface.isStopped
       dispose
     end
 
     def exit
-      control_panel.remove if respond_to?(:control_panel)
       # Calling PApplet#exit kills own process, which causes slow restart.
       #super()
       self.close
