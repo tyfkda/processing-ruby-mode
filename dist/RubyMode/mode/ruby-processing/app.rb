@@ -186,13 +186,13 @@ module Processing
       surface.stopThread
       surface.setVisible(false) if surface.isStopped
       dispose
+      $app = nil
     end
 
     def exit
       # Calling PApplet#exit kills own process, which causes slow restart.
       #super()
       self.close
-      $app = nil
       $stderr.puts DEACTIVATE_RUN
     end
 
