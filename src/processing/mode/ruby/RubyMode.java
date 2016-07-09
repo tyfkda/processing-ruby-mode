@@ -167,13 +167,16 @@ public class RubyMode extends Mode {
     sb.append(sketchTempFolder.getAbsolutePath());
     sb.append(core.getClassPath());
 
-    // jruby.jar: search under runtime directory.
-    File jrubyJarFile = sketch.getMode().getContentFile("runtime/jruby-complete-9.1.2.0.jar");
-    if (jrubyJarFile.exists() && jrubyJarFile.isFile()) {
+    // Runtime .jar files for Ruby mode.
+    final File runtimeFolder = new File(sketch.getMode().getFolder(), "runtime");
+    File[] jars = runtimeFolder.listFiles(new FilenameFilter() {
+        public boolean accept(File dir, String name) {
+          return name.toLowerCase().endsWith(".jar") && !name.startsWith(".");
+        }
+      });
+    for (File jar : jars) {
       sb.append(File.pathSeparator);
-      sb.append(jrubyJarFile.getAbsolutePath());
-    } else {
-      System.err.println("Cannot find jruby.jar");
+      sb.append(jar.getAbsolutePath());
     }
     return sb.toString();
   }
