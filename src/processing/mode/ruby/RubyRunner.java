@@ -240,8 +240,10 @@ public class RubyRunner implements MessageConsumer {
     List<String> params = new ArrayList<String>();
     if (editor != null) {
       Point location = editor.getSketchLocation();
-      params.add("x=" + location.x);
-      params.add("y=" + location.y);
+      if (location != null) {
+        params.add("x=" + location.x);
+        params.add("y=" + location.y);
+      }
     }
     params.add("sourcePath=" + sourcePath);
 
