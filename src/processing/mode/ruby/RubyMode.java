@@ -24,13 +24,6 @@ import java.awt.Point;
 import processing.core.PApplet;
 
 public class RubyMode extends Mode {
-  private static final FilenameFilter JARS = new FilenameFilter() {
-    @Override
-    public boolean accept(final File dir, final String name) {
-      return name.endsWith(".jar");
-    }
-  };
-
   public RubyMode(Base base, File folder) {
     super(base, folder);
   }
