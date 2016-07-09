@@ -1,5 +1,13 @@
 package processing.mode.ruby;
 
+import java.awt.Point;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.List;
+
 import processing.app.Base;
 import processing.app.Library;
 import processing.app.Mode;
@@ -12,15 +20,6 @@ import processing.app.syntax.TokenMarker;
 import processing.app.ui.Editor;
 import processing.app.ui.EditorException;
 import processing.app.ui.EditorState;
-
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.PrintWriter;
-import java.io.FileWriter;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.awt.Point;
 import processing.core.PApplet;
 
 public class RubyMode extends Mode {

@@ -6,6 +6,7 @@ import processing.app.ui.EditorToolbar;
 
 import java.awt.Image;
 import java.awt.event.MouseEvent;
+
 import javax.swing.JPopupMenu;
 
 public class RubyToolbar extends EditorToolbar {
