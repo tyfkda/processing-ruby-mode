@@ -4,20 +4,20 @@ import processing.app.ui.Editor;
 import processing.app.ui.EditorToolbar;
 
 public class RubyToolbar extends EditorToolbar {
-  private RubyEditor rbeditor;
+  private RubyEditor rbEditor;
 
-  public RubyToolbar(Editor editor) {
+  public RubyToolbar(RubyEditor editor) {
     super(editor);
-    rbeditor = (RubyEditor) editor;
+    rbEditor = editor;
   }
 
   @Override
   public void handleRun(int modifiers) {
-    rbeditor.handleRun();
+    rbEditor.handleRun();
   }
 
   @Override
   public void handleStop() {
-    rbeditor.handleStop();
+    rbEditor.handleStop();
   }
 }
