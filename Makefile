@@ -17,15 +17,9 @@ P5_PATH=/Applications/Processing.app
 P5_CORE_JAR=$(P5_PATH)/Contents/Java/core.jar
 P5_APP_JAR=$(P5_PATH)/Contents/Java/pde.jar
 
-P5_RBMODE_PATH=~/Documents/Processing/modes/RubyMode
-P5_RBMODE_JAR_PATH=$(P5_RBMODE_PATH)/mode/$(JAR_NAME)
-
-all:	$(P5_RBMODE_JAR_PATH)
+all:	$(TARGET)
 
 zip:	$(DIST_ZIP)
-
-$(P5_RBMODE_JAR_PATH):	$(TARGET)
-	cp $(TARGET) $@
 
 $(TARGET):	$(SRCS) $(OUTPUT_PATH)
 	javac -d $(OUTPUT_PATH) -sourcepath $(SRC_ROOT_PATH) \
