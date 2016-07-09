@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 import processing.app.Base;
 import processing.app.Library;
@@ -160,11 +161,11 @@ public class RubyMode extends Mode {
   }
 
   static private String getClassPasses(Sketch sketch, File sketchTempFolder) {
+    StringJoiner sj = new StringJoiner(File.pathSeparator);
     // Processing libraries.
     Library core = sketch.getMode().getCoreLibrary();
-    StringBuffer sb = new StringBuffer();
-    sb.append(sketchTempFolder.getAbsolutePath());
-    sb.append(core.getClassPath());
+    // core.getClassPass() includes separator, so concat with first item.
+    sj.add(sketchTempFolder.getAbsolutePath() + core.getClassPath());
 
     // Runtime .jar files for Ruby mode.
     final File runtimeFolder = new File(sketch.getMode().getFolder(), "runtime");
@@ -174,10 +175,9 @@ public class RubyMode extends Mode {
         }
       });
     for (File jar : jars) {
-      sb.append(File.pathSeparator);
-      sb.append(jar.getAbsolutePath());
+      sj.add(jar.getAbsolutePath());
     }
-    return sb.toString();
+    return sj.toString();
   }
 
   @Override
