@@ -40,6 +40,10 @@ module Processing
       "load '#{File.basename(path)}'"
     end.join("\n")
 
+    # Needed to remove existing sketch class,
+    # because `settings` methods isn't called after first time, somehow.
+    Processing::App.remove_sketch_class
+
     # For use with "bare" sketches that don't want to define a class or methods
 
     size_call, source = extract_size_call(source)

@@ -78,6 +78,13 @@ module Processing
     def self.full_screen;   @@full_screen = true; end
     def full_screen?;       @@full_screen;        end
 
+    def self.remove_sketch_class
+      return unless @sketch_class
+      classSymbol = @sketch_class.name.to_sym
+      Object.class_eval { remove_const(classSymbol) }
+      @sketch_class = nil
+    end
+
 
     # Keep track of what inherits from the Processing::App, because we're going
     # to want to instantiate one.
