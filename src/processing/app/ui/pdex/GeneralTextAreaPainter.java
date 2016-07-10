@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Shape;
 
 import javax.swing.text.Segment;
 import javax.swing.text.Utilities;
@@ -91,9 +92,10 @@ public class GeneralTextAreaPainter extends TextAreaPainter {
     //  gfx.fillRect(0, y, Editor.LEFT_GUTTER, fm.getHeight());
     //} else {
       //gfx.setColor(getJavaTextArea().gutterBgColor);
+      Shape clip = gfx.getClip();
       gfx.setClip(0, y, Editor.LEFT_GUTTER, fm.getHeight());
       gfx.drawImage(gutterGradient, 0, 0, getWidth(), getHeight(), this);
-      gfx.setClip(null);  // reset
+      gfx.setClip(clip);  // reset
     //}
 
     if (line >= textArea.getLineCount())
