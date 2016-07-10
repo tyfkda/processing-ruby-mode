@@ -26,7 +26,7 @@ $(TARGET):	$(SRCS) $(OUTPUT_PATH)
 	  -cp src:$(P5_CORE_JAR):$(P5_APP_JAR) $(SRC_DIR)/processing/mode/ruby/RubyMode.java
 	jar -cvf $@ -C $(OUTPUT_PATH) .
 
- $(OUTPUT_PATH):
+$(OUTPUT_PATH):
 	mkdir -p  $(OUTPUT_PATH)
 
 clean:
