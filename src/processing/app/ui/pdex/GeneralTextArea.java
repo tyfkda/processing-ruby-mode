@@ -10,6 +10,7 @@ import processing.app.syntax.TextAreaDefaults;
 import processing.app.syntax.TextAreaPainter;
 import processing.app.ui.Editor;
 
+@SuppressWarnings("serial")
 public class GeneralTextArea extends JEditTextArea {
   /**
    * Sets default cursor (instead of text cursor) in the gutter area.
