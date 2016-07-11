@@ -1,5 +1,7 @@
 *.class
 sketch.properties
 
+/classes/.gitignore
+
 /dist/RubyMode.zip
 /dist/RubyMode/mode/RubyMode.jar
