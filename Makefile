@@ -1,6 +1,6 @@
 NAME=RubyMode
 JAR_NAME=$(NAME).jar
-TARGET=dist/RubyMode/$(JAR_NAME)
+TARGET=dist/RubyMode/mode/$(JAR_NAME)
 ZIP_NAME=$(NAME).zip
 
 DIST_DIR=dist
