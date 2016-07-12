@@ -17,6 +17,7 @@ import processing.app.syntax.TextAreaPainter;
 import processing.app.syntax.TokenMarker;
 import processing.app.ui.Editor;
 
+@SuppressWarnings("serial")
 public class GeneralTextAreaPainter extends TextAreaPainter {
   protected Font gutterTextFont;
   protected Color gutterTextColor;

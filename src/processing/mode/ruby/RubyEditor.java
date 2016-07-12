@@ -21,6 +21,7 @@ import processing.app.ui.EditorToolbar;
 import processing.app.ui.Toolkit;
 import processing.app.ui.pdex.GeneralTextArea;
 
+@SuppressWarnings("serial")
 public class RubyEditor extends Editor {
   private RubyMode rbmode;
 

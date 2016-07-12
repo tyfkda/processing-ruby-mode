@@ -1,8 +1,8 @@
 package processing.mode.ruby;
 
-import processing.app.ui.Editor;
 import processing.app.ui.EditorToolbar;
 
+@SuppressWarnings("serial")
 public class RubyToolbar extends EditorToolbar {
   private RubyEditor rbEditor;
 

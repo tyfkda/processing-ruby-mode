@@ -3,14 +3,12 @@ package processing.mode.ruby;
 import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import processing.app.Base;
 import processing.app.Platform;
 import processing.app.Preferences;
 import processing.app.RunnerListener;
