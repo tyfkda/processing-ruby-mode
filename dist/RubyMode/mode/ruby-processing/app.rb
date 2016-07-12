@@ -155,9 +155,10 @@ module Processing
         args << "--location=#{options[:x]},#{options[:y]}"
       end
 
-      title = options[:title] || File.basename(SKETCH_PATH).sub(/(\.rb)$/, '').titleize
-      args << title
+      title = options[:title] || File.basename(SKETCH_PATH).sub(/(\.(rpde|rb))$/, '')
+      args << title  # run_sketch requires title, anyway.
       PApplet.run_sketch(args, self)
+      surface.set_title(title)
     end
 
     def size(*args)
