@@ -127,6 +127,12 @@ public class RubyEditor extends Editor {
   @Override
   public void deactivateRun() {
     toolbar.deactivateRun();
+
+    // Move editor window to the front.
+    // TODO: Set focus to the window.
+    this.setState(java.awt.Frame.NORMAL);
+    this.setVisible(true);
+    this.toFront();
   }
 
 
