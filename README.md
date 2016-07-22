@@ -1,6 +1,8 @@
 Ruby Mode for PDE (Processing)
 ==============================
 
+[![Join the chat at https://gitter.im/tyfkda/processing-ruby-mode](https://badges.gitter.im/tyfkda/processing-ruby-mode.svg)](https://gitter.im/tyfkda/processing-ruby-mode?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 **Worki in progress**
 
 This is additional mode for PDE, [Processing](http://www.processing.org/) IDE.
