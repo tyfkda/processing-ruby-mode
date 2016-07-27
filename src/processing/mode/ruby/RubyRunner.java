@@ -135,11 +135,11 @@ public class RubyRunner implements MessageConsumer {
     int lastSeparator = sourcePath.lastIndexOf(File.separatorChar);
     String dirname = sourcePath.substring(0, lastSeparator + 1);
     Pattern pattern = Pattern.compile(Pattern.quote(dirname));
-    errorStreamWithFilter = new StreamFilter(System.err, pattern, "");
+    errorStreamWithFilter = new StreamFilter(pattern, "", System.err);
     errThread = new MessageSiphon(process.getErrorStream(), this).getThread();
     outThread = new StreamRedirectThread("JVM stdout Reader",
                                          process.getInputStream(),
-                                         new StreamFilter(System.out, pattern, ""));
+                                         new StreamFilter(pattern, "", System.out));
     errThread.start();
     outThread.start();
     try {

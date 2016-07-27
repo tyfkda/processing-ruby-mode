@@ -7,20 +7,21 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+// Replace messages and output them to ostream.
 public class StreamFilter extends OutputStream {
   private final static int INITIAL_LENGTH = 256;
   private final static Charset UTF8 = Charset.forName("UTF-8");
 
-  private OutputStream stream;
   private Pattern pattern;
   private String replace;
+  private OutputStream ostream;
   private byte[] bytes;
   private int pointer;
 
-  public StreamFilter(OutputStream stream, Pattern pattern, String replace) {
-    this.stream = stream;
+  public StreamFilter(Pattern pattern, String replace, OutputStream ostream) {
     this.pattern = pattern;
     this.replace = replace;
+    this.ostream = ostream;
     bytes = new byte[INITIAL_LENGTH];
     clear();
   }
@@ -43,9 +44,9 @@ public class StreamFilter extends OutputStream {
   public void print(String line) throws IOException {
     Matcher m = pattern.matcher(line);
     if (m.find())
-      stream.write(m.replaceAll(replace).getBytes(UTF8));
+      ostream.write(m.replaceAll(replace).getBytes(UTF8));
     else
-      stream.write(line.getBytes(UTF8));
+      ostream.write(line.getBytes(UTF8));
   }
 
   private void output() throws IOException {
