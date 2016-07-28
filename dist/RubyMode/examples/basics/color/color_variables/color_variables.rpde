@@ -19,7 +19,7 @@ outside = color(153, 51, 0)
 #color middle = #CC9900;
 #color outside = #993300;
 
-pushMatrix()
+push_matrix()
 translate(80, 80)
 fill(outside)
 rect(0, 0, 200, 200)
@@ -27,9 +27,9 @@ fill(middle)
 rect(40, 60, 120, 120)
 fill(inside)
 rect(60, 90, 80, 80)
-popMatrix()
+pop_matrix()
 
-pushMatrix()
+push_matrix()
 translate(360, 80)
 fill(inside)
 rect(0, 0, 200, 200)
@@ -37,5 +37,5 @@ fill(outside)
 rect(40, 60, 120, 120)
 fill(middle)
 rect(60, 90, 80, 80)
-popMatrix()
+pop_matrix()
 

@@ -11,7 +11,7 @@ def setup()
   size(640, 360)
   # The file "bot1.svg" must be in the data folder
   # of the current sketch to load successfully
-  @bot = loadShape("bot1.svg")
+  @bot = load_shape("bot1.svg")
 end 
 
 def draw()
