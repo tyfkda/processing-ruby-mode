@@ -2,9 +2,11 @@ package processing.app.ui.pdex;
 
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import processing.app.Preferences;
 import processing.app.Sketch;
 import processing.app.syntax.JEditTextArea;
 import processing.app.syntax.PdeInputHandler;
@@ -37,8 +39,36 @@ public class GeneralInputHandler extends PdeInputHandler {
       sketch.setModified(true);
     }
 
-    if (code == KeyEvent.VK_ENTER) {
-      textarea.setSelectedText(newline());
+    switch (c) {
+    case 9:  // Tab
+      if ((event.getModifiers() & InputEvent.SHIFT_MASK) != 0) {
+        // if shift is down, the user always expects an outdent
+        // http://code.google.com/p/processing/issues/detail?id=458
+        editor.handleOutdent();
+      } else if (textarea.isSelectionActive()) {
+        editor.handleIndent();
+      } else if (Preferences.getBoolean("editor.tabs.expand")) {
+        int tabSize = Preferences.getInteger("editor.tabs.size");
+        textarea.setSelectedText(spaces(tabSize));
+        event.consume();
+      } else {  // !Preferences.getBoolean("editor.tabs.expand")
+        textarea.setSelectedText("\t");
+        event.consume();
+      }
+      break;
+
+    case 10: case 13:  // Enter
+      if (Preferences.getBoolean("editor.indent")) {
+        textarea.setSelectedText(newline());
+      } else {
+        // Enter/Return was being consumed by somehow even if false
+        // was returned, so this is a band-aid to simply fire the event again.
+        // http://dev.processing.org/bugs/show_bug.cgi?id=1073
+        textarea.setSelectedText(String.valueOf(c));
+      }
+      // mark this event as already handled (all but ignored)
+      event.consume();
+      break;
     }
     return false;
   }
@@ -50,5 +80,11 @@ public class GeneralInputHandler extends PdeInputHandler {
     if (!m.find())
       return "\n";
     return "\n" + m.group(1);
+  }
+
+  static private String spaces(int count) {
+    char[] c = new char[count];
+    Arrays.fill(c, ' ');
+    return new String(c);
   }
 }
