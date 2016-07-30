@@ -59,6 +59,7 @@ public class GeneralInputHandler extends PdeInputHandler {
 
     case 10: case 13:  // Enter
       if (Preferences.getBoolean("editor.indent")) {
+        appendSpacesToSelection();
         textarea.setSelectedText(newline());
       } else {
         // Enter/Return was being consumed by somehow even if false
@@ -71,6 +72,32 @@ public class GeneralInputHandler extends PdeInputHandler {
       break;
     }
     return false;
+  }
+
+  private void appendSpacesToSelection() {
+    final JEditTextArea textArea = editor.getTextArea();
+    final int lineNo = textArea.getCaretLine();
+    final String line = textArea.getLineText(lineNo);
+    final int n = line.length();
+    final int lineStart = textArea.getLineStartOffset(lineNo);
+    final int caretPos = textArea.getCaretPosition();
+
+    // Back (for trimming ending whitespaces.)
+    final int start = Math.min(caretPos, textArea.getSelectionStart()) - lineStart;
+    int s = start;
+    while (s > 0 &&
+           (line.charAt(s - 1) == ' ' || line.charAt(s - 1) == '\t'))
+      --s;
+
+    // Front (to align indent.)
+    final int end = Math.max(caretPos, textArea.getSelectionStop()) - lineStart;
+    int e = end;
+    while (e < n &&
+           (line.charAt(e) == ' ' || line.charAt(e) == '\t'))
+      ++e;
+
+    if (s < start || e > end)
+      textArea.select(s + lineStart, e + lineStart);
   }
 
   private String newline() {
