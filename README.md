@@ -12,6 +12,7 @@ Code to run application is taken from [ruby-processing](https://github.com/jashk
 
 # Development
 ## Requirements
+  * Build tool: `make`
   * Java tools: `javac`, `jar`
   * Processing runtime jars: `core.jar`, `pde.jar`
 
