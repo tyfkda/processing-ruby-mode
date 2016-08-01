@@ -20,13 +20,12 @@ Code to run application is taken from [ruby-processing](https://github.com/jashk
   * `dist/RubyMode/RubyMode.jar` will be created
 
 ## How to install
-  + Create `RubyMode` directory in `modes` directory in Processing work directory:
+  1. Create `RubyMode` directory in `modes` directory in Processing work directory:
     * MacOSX: `~/Documents/Processing/modes/`
     * Windows: `%homepath%\Documents\modes\`
     * Linux: `~/sketchbook/modes/`
-    + Copy all files under `dist/RubyMode/` directory into created `RubyMode` directory
-  + Copy all files under `dist/RubyMode/` into Processing `RubyMode` directory.
-  + Reboot PDE.
+  2. Copy all files under `dist/RubyMode/` directory into created `RubyMode` directory
+  3. Reboot PDE.
 
 ## How to use Ruby mode in PDE
   * Choose `Ruby` from mode pull down menu in PDE
