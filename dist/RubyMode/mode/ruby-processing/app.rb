@@ -132,9 +132,9 @@ module Processing
       #@started = false
 
       java.lang.Thread.default_uncaught_exception_handler = proc do |thread, exception|
-        puts(exception.class.to_s)
-        puts(exception.message)
-        puts(exception.backtrace.collect { |trace| "\t" + trace })
+        $stderr.puts(exception.class.to_s)
+        $stderr.puts(exception.message)
+        $stderr.puts(exception.backtrace.collect { |trace| "\t" + trace })
         close
       end
 
