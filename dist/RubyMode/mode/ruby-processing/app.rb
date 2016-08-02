@@ -136,6 +136,7 @@ module Processing
         $stderr.puts(exception.message)
         $stderr.puts(exception.backtrace.collect { |trace| "\t" + trace })
         close
+        $stderr.puts DEACTIVATE_RUN
       end
 
       # for the list of all available args, see
