@@ -5,13 +5,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 
 import processing.app.Mode;
-import processing.app.syntax.JEditTextArea;
+import processing.app.syntax.PdeTextArea;
 import processing.app.syntax.TextAreaDefaults;
 import processing.app.syntax.TextAreaPainter;
 import processing.app.ui.Editor;
 
 @SuppressWarnings("serial")
-public class GeneralTextArea extends JEditTextArea {
+public class GeneralTextArea extends PdeTextArea {
   /**
    * Sets default cursor (instead of text cursor) in the gutter area.
    */
@@ -34,7 +34,7 @@ public class GeneralTextArea extends JEditTextArea {
   };
 
   public GeneralTextArea(TextAreaDefaults defaults, Editor editor) {
-    super(defaults, new GeneralInputHandler(editor));
+    super(defaults, new GeneralInputHandler(editor), editor);
 
     // change cursor to pointer in the gutter area
     painter.addMouseMotionListener(gutterCursorMouseAdapter);
@@ -51,35 +51,5 @@ public class GeneralTextArea extends JEditTextArea {
 
   public void setMode(Mode mode) {
     getCustomPainter().setMode(mode);
-  }
-
-  /**
-   * Convert a character offset to a horizontal pixel position inside the text
-   * area. Overridden to take gutter width into account.
-   *
-   * @param line
-   *          the 0-based line number
-   * @param offset
-   *          the character offset (0 is the first character on a line)
-   * @return the horizontal position
-   */
-  @Override
-  public int _offsetToX(int line, int offset) {
-    return super._offsetToX(line, offset) + Editor.LEFT_GUTTER;
-  }
-
-  /**
-   * Convert a horizontal pixel position to a character offset. Overridden to
-   * take gutter width into account.
-   *
-   * @param line
-   *          the 0-based line number
-   * @param x
-   *          the horizontal pixel position
-   * @return he character offset (0 is the first character on a line)
-   */
-  @Override
-  public int xToOffset(int line, int x) {
-    return super.xToOffset(line, x - Editor.LEFT_GUTTER);
   }
 }

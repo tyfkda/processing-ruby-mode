@@ -15,10 +15,8 @@ import processing.app.ui.Editor;
 public class GeneralInputHandler extends PdeInputHandler {
   private static Pattern reIndent = Pattern.compile("^(\\s+)");
 
-  private final Editor editor;
-
   public GeneralInputHandler(final Editor editor) {
-    this.editor = editor;
+    super(editor);
   }
 
   @Override
@@ -68,26 +66,11 @@ public class GeneralInputHandler extends PdeInputHandler {
 
   @Override
   public boolean handleTyped(final KeyEvent event) {
-    char c = event.getKeyChar();
-
-    if ((event.getModifiers() & InputEvent.CTRL_MASK) != 0) {
-      // on linux, ctrl-comma (prefs) being passed through to the editor
-      if (c == KeyEvent.VK_COMMA) {
-        event.consume();
-        return true;
-      }
-      // https://github.com/processing/processing/issues/3847
-      if (c == KeyEvent.VK_SPACE) {
-        event.consume();
-        return true;
-      }
-    }
-
     // Set sketch as modified here.
     Sketch sketch = editor.getSketch();
     sketch.setModified(true);
 
-    return false;
+    return super.handleTyped(event);
   }
 
   private void appendSpacesToSelection() {
