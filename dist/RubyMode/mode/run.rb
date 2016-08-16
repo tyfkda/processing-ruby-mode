@@ -36,9 +36,10 @@ module Processing
     has_methods = !!source.match(/^[^#]*(def\s+setup|def\s+draw)\b/)
     has_settings = !!source.match(/^[^#]*(def\s+settings)\b/)
 
-    loads = Dir.glob("#{SKETCH_ROOT}/*.rb").map do |path|
-      "load '#{File.basename(path)}'"
-    end.join("\n")
+    loads = Dir.glob(["#{SKETCH_ROOT}/*.rb", "#{SKETCH_ROOT}/*.rpde"])
+      .select {|path| File.basename(path) != File.basename(SKETCH_PATH)}
+      .map {|path| "load '#{File.basename(path)}'"}
+      .join("\n")
 
     # Needed to remove existing sketch class,
     # because `settings` methods isn't called after first time, somehow.

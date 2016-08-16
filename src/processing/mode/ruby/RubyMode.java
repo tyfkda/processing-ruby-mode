@@ -56,19 +56,11 @@ public class RubyMode extends Mode {
   }
 
   /**
-   * Returns the module extension.
-   */
-  @Override
-  public String getModuleExtension() {
-    return "rb";
-  }
-
-  /**
    * Returns a String[] array of proper extensions.
    */
   @Override
   public String[] getExtensions() {
-    return new String[] { getDefaultExtension(), getModuleExtension() };
+    return new String[] { getDefaultExtension(), "rb" };
   }
 
   /**
